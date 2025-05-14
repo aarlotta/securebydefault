@@ -7,7 +7,8 @@
 .DESCRIPTION
     Creates a standardized project structure for PowerShell module development, including Git initialization,
     directory structure, and configuration files. The script is idempotent and can be run multiple times
-    safely without affecting existing content.
+    safely. It does not reinitialize Git or remove remotes even when -Force is used. Instead, it validates
+    and supplements the repository configuration.
 .VERSION
     1.0.0
 .PROMPT_ID
@@ -80,7 +81,7 @@ function Set-GitCommitTemplate {
 #
 # Types: chore, feat, fix, docs, test, refactor, ci, perf
 # Scope: module, script, init, git, ci, doc, etc.
-# Example: feat(module): add execution policy enforcement
+# Example: feat(module): add new logging function
 "@
 
     # Create template file if it doesn't exist
@@ -117,24 +118,35 @@ function New-InitialCommit {
 # Main script execution
 Write-Verbose "Initializing PowerShell Module project structure..."
 
-# Handle Git initialization
-if (Test-GitInitialized) {
-    if ($Force) {
-        Write-Warning "Force flag detected. Removing existing Git repository..."
-        if ($PSCmdlet.ShouldProcess(".git", "Remove directory")) {
-            Remove-Item -Path ".git" -Recurse -Force
-            Write-Verbose "Initializing new Git repository..."
-            git init | Out-Null
-            Write-Verbose "Git repository reinitialized successfully."
+# Handle Git initialization safely
+if (-not (Test-GitInitialized)) {
+    Write-Verbose "No Git repository found. Initializing..."
+    if ($PSCmdlet.ShouldProcess("Git", "Initialize repository")) {
+        git init | Out-Null
+        Write-Verbose "Git repository initialized."
+
+        # Optional: Add default remote if missing
+        $origin = git remote get-url origin 2>$null
+        if (-not $origin) {
+            git remote add origin https://github.com/aarlotta/securebydefault
+            Write-Verbose "Git remote 'origin' configured."
         }
-    } else {
-        Write-Warning "Git repository already exists. Use -Force to reinitialize."
     }
 } else {
-    Write-Verbose "Initializing Git repository..."
-    if ($PSCmdlet.ShouldProcess("Git repository", "Initialize")) {
-        git init | Out-Null
-        Write-Verbose "Git repository initialized successfully."
+    Write-Verbose "Git repository already exists. Verifying remote..."
+
+    $origin = git remote get-url origin 2>$null
+    if (-not $origin) {
+        if ($PSCmdlet.ShouldProcess("Git", "Add missing remote origin")) {
+            git remote add origin https://github.com/aarlotta/securebydefault
+            Write-Verbose "Git remote 'origin' added."
+        }
+    } else {
+        Write-Verbose "Git remote 'origin' already set to: $origin"
+    }
+
+    if ($Force) {
+        Write-Warning "Force flag detected, but .git will NOT be deleted to preserve history."
     }
 }
 
