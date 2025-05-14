@@ -64,7 +64,8 @@ function Add-CertificateToTrustedStore {
         Write-Host "✔️ Trusted certificate added: $($Certificate.Subject)"
     }
     catch {
-        Write-Error "Failed to add certificate to TrustedPublisher: $($_.Exception.Message)"
+        $errorMsg = "Failed to add certificate to TrustedPublisher: " + $_.Exception.Message
+        Write-Error $errorMsg
         throw
     }
 } 
