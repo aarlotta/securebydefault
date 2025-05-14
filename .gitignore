@@ -1,0 +1,20 @@
+# Ignore IDE and editor files
+.vscode/
+*.log
+*.zip
+*.tmp
+*.bak
+*.DS_Store
+
+# PowerShell module files
+*.psm1
+*.psd1
+*.ps1xml
+
+# Test results
+TestResults/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
