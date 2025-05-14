@@ -16,6 +16,15 @@ function Sign-Scripts {
         throw "❌ Signing certificate not found for $Project"
     }
 
+    # Ensure certificate is trusted
+    try {
+        Add-CertificateToTrustedStore -Certificate $cert
+    }
+    catch {
+        Write-Warning "Certificate trust check failed: $_"
+        Write-Warning "Script signing may fail if certificate is not trusted"
+    }
+
     # Get all .ps1 files recursively
     $scripts = Get-ChildItem -Path $TargetPath -Recurse -Filter "*.ps1"
     $signedCount = 0
