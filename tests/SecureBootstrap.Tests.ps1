@@ -27,4 +27,8 @@ Describe "SecureBootstrap Module" {
             Get-Command Write-CursorPromptLog -ErrorAction SilentlyContinue | Should Not BeNullOrEmpty
         }
     }
-} 
+}
+
+# Keep console window open after tests complete
+Write-Host "`nPress any key to continue..."
+$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") 
