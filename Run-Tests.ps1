@@ -25,4 +25,4 @@ if ($testResults.FailedCount -gt 0) {
     Write-Warning "Tests failed: $($testResults.FailedCount) failed, $($testResults.PassedCount) passed"
     exit 1
 }
-Write-Verbose "All tests passed: $($testResults.PassedCount) passed" 
+Write-Verbose "All tests passed: $($testResults.PassedCount) passed"

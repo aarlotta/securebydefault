@@ -194,4 +194,4 @@ if (-not (git rev-parse --verify HEAD 2>$null)) {
     New-InitialCommit
 }
 
-Write-Verbose "Secure project structure initialized. Ready for module development." 
+Write-Verbose "Secure project structure initialized. Ready for module development."
