@@ -1,0 +1,19 @@
+name: Apply Repository Settings
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/settings.yml'
+  workflow_dispatch:
+
+jobs:
+  apply-settings:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply repository settings
+        uses: reposettings/action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          settings_file: .github/settings.yml 
