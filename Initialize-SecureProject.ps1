@@ -19,11 +19,6 @@ param(
     [switch]$Force
 )
 
-# Define Unicode characters for status indicators
-$WARNING_SYMBOL = [char]0x26A0  # ⚠
-$SUCCESS_SYMBOL = [char]0x2714  # ✔
-$INFO_SYMBOL = [char]0x2139     # ℹ
-
 # Set UTF-8 encoding for proper emoji support
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
