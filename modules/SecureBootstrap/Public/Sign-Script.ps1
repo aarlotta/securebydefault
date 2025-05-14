@@ -1,4 +1,4 @@
-function Sign-Scripts {
+function Sign-Script {
     [CmdletBinding(SupportsShouldProcess = $true)]
     [OutputType([int])]
     param (
