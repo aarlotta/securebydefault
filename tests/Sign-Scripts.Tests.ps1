@@ -58,20 +58,39 @@ Describe "Sign-Script" {
             }
         }
 
+        It "Should sign all .ps1 files in the target path with a valid certificate" {
+            # Create a certificate without Code Signing EKU
+            $badCert = New-SelfSignedCertificate -DnsName "InvalidCert" -CertStoreLocation "Cert:\CurrentUser\My" -KeyUsage DigitalSignature
+            $badCertWithNoEku = Get-ChildItem Cert:\CurrentUser\My | 
+                Where-Object { $_.Thumbprint -eq $badCert.Thumbprint } |
+                Select-Object -First 1
+
+            { Sign-Script -Project "InvalidCert" -TargetPath $TestDrive } | Should Throw "Code Signing Enhanced Key Usage"
+        }
+
         It "Should throw when certificate is not found" {
-            { Sign-Script -Project "NonExistentProject" } | Should Throw "Signing certificate not found for NonExistentProject"
+            { Sign-Script -Project "NonExistentProject" } | Should Throw "No certificates found with subject"
         }
 
         It "Should handle signing failures gracefully" {
-            # Mock Set-AuthenticodeSignature to simulate a failure
-            Mock Set-AuthenticodeSignature {
-                throw "Simulated signing failure"
-            }
+            # Create a certificate without Code Signing EKU
+            $badCert = New-SelfSignedCertificate -DnsName "InvalidCert" -CertStoreLocation "Cert:\CurrentUser\My" -KeyUsage DigitalSignature
+            $badCertWithNoEku = Get-ChildItem Cert:\CurrentUser\My | 
+                Where-Object { $_.Thumbprint -eq $badCert.Thumbprint } |
+                Select-Object -First 1
 
-            { Sign-Script -Project "TestSecureSign" -TargetPath $TestDrive } | Should Not Throw
+            { Sign-Script -Project "InvalidCert" -TargetPath $TestDrive } | Should Throw "Code Signing Enhanced Key Usage"
         }
 
-        # Clean up test certificate
-        Remove-Item -Path "Cert:\CurrentUser\My\$($cert.Thumbprint)" -Force
+        # Clean up test certificates
+        AfterAll {
+            # Clean up test certificate
+            Remove-Item -Path "Cert:\CurrentUser\My\$($cert.Thumbprint)" -Force
+            
+            # Clean up InvalidCert
+            Get-ChildItem -Path Cert:\CurrentUser\My |
+                Where-Object { $_.Subject -like "*InvalidCert*" } |
+                ForEach-Object { Remove-Item $_.PSPath -Force }
+        }
     }
 } 
