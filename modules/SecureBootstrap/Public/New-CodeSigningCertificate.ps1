@@ -41,5 +41,6 @@ function New-CodeSigningCertificate {
         Write-Verbose "Certificate already exported to $pfxPath"
     }
 
-    Write-Output $cert
+    # Return certificate object without verbose output
+    $cert | Select-Object -Property Subject, Thumbprint, NotAfter
 }
