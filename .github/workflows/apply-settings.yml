@@ -7,27 +7,20 @@ on:
     paths:
       - '.github/settings.yml'
 
-permissions:
-  contents: read
-  actions: read
-  administration: write
-
 jobs:
   apply-settings:
     runs-on: ubuntu-latest
-    steps:
-      - name: Debug - Print Event Payload
-        run: |
-          echo "Event payload:"
-          cat $GITHUB_EVENT_PATH
-          echo "---"
+    permissions:
+      contents: read
+      actions: read
+      administration: write
 
-      - name: Debug - Check Current Protection
-        run: |
-          gh api repos/${{ github.repository }}/branches/main/protection
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Apply repository settings
         uses: reitermarkus/repo-settings@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          settings_file: .github/settings.yml 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-path: .github/settings.yml 
