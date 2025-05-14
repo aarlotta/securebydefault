@@ -1,0 +1,21 @@
+name: Lint GitHub Settings File
+
+on:
+  push:
+    paths:
+      - '.github/settings.yml'
+  pull_request:
+    paths:
+      - '.github/settings.yml'
+
+jobs:
+  lint-settings:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate YAML syntax
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: .github/settings.yml 
