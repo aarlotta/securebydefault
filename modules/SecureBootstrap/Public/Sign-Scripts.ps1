@@ -1,11 +1,14 @@
-function Sign-Scripts {
-    [CmdletBinding()]
+function Sign-Script {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    [OutputType([int])]
     param (
         [Parameter(Mandatory = $false)]
-        [string]$Project = "SecureDevEnv",
+        [string]
+        $Project = "SecureDevEnv",
 
         [Parameter(Mandatory = $false)]
-        [string]$TargetPath = "."
+        [string]
+        $TargetPath = "."
     )
 
     # Find the code signing certificate
@@ -13,7 +16,7 @@ function Sign-Scripts {
     $cert = Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object { $_.Subject -eq $certSubject }
 
     if (-not $cert) {
-        throw "❌ Signing certificate not found for $Project"
+        throw "Signing certificate not found for $Project"
     }
 
     # Ensure certificate is trusted
@@ -30,18 +33,20 @@ function Sign-Scripts {
     $signedCount = 0
 
     foreach ($script in $scripts) {
-        try {
-            $result = Set-AuthenticodeSignature -FilePath $script.FullName -Certificate $cert
-            if ($result.Status -eq 'Valid') {
-                Write-Host "✍️ Signed: $($script.FullName)"
-                $signedCount++
+        if ($PSCmdlet.ShouldProcess($script.FullName, "Sign script with certificate")) {
+            try {
+                $result = Set-AuthenticodeSignature -FilePath $script.FullName -Certificate $cert
+                if ($result.Status -eq 'Valid') {
+                    Write-Verbose "Signed: $($script.FullName)"
+                    $signedCount++
+                }
             }
-        }
-        catch {
-            Write-Warning "Failed to sign $($script.FullName): $_"
+            catch {
+                Write-Warning "Failed to sign $($script.FullName): $_"
+            }
         }
     }
 
-    Write-Host "✅ Signed $signedCount scripts with certificate: $certSubject"
+    Write-Verbose "Signed $signedCount scripts with certificate: $certSubject"
     return $signedCount
 } 

@@ -1,5 +1,5 @@
 function Add-CertificateToTrustedStore {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true)]
         [System.Security.Cryptography.X509Certificates.X509Certificate2]
@@ -56,12 +56,14 @@ function Add-CertificateToTrustedStore {
         }
 
         # Add certificate to TrustedPublisher
-        $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store($TRUSTED_PUBLISHER_STORE, $CURRENT_USER_STORE)
-        $trustedStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadWrite)
-        $trustedStore.Add($Certificate)
-        $trustedStore.Close()
+        if ($PSCmdlet.ShouldProcess($Certificate.Subject, "Add certificate to TrustedPublisher store")) {
+            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store($TRUSTED_PUBLISHER_STORE, $CURRENT_USER_STORE)
+            $trustedStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadWrite)
+            $trustedStore.Add($Certificate)
+            $trustedStore.Close()
 
-        Write-Host "✔️ Trusted certificate added: $($Certificate.Subject)"
+            Write-Verbose "Certificate added to TrustedPublisher: $($Certificate.Subject)"
+        }
     }
     catch {
         $errorMsg = "Failed to add certificate to TrustedPublisher: " + $_.Exception.Message

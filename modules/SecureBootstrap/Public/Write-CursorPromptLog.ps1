@@ -1,7 +1,13 @@
 function Write-CursorPromptLog {
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        [string]$ScriptPath,
-        [string]$LogPath = "cursor_prompt.log"
+        [Parameter(Mandatory = $true)]
+        [string]
+        $ScriptPath,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $LogPath = "cursor_prompt.log"
     )
 
     try {
@@ -10,8 +16,10 @@ function Write-CursorPromptLog {
         $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
         $logEntry = "# [CURSOR_PROMPT_LOG]$promptBlock`n# [RESPONSE LOGGED @ $timestamp]`n`n$content`n"
 
-        Add-Content -Path $LogPath -Value $logEntry -Encoding UTF8
-        Write-Host "Logged prompt block from $ScriptPath to $LogPath"
+        if ($PSCmdlet.ShouldProcess($LogPath, "Add log entry")) {
+            Add-Content -Path $LogPath -Value $logEntry -Encoding UTF8
+            Write-Verbose "Logged prompt block from $ScriptPath to $LogPath"
+        }
     }
     catch {
         Write-Error "Failed to write to log file: $($_.Exception.Message)"
