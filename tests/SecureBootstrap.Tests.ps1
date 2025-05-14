@@ -47,7 +47,7 @@ Describe "SecureBootstrap Module" {
 
         It "Should show warning message for incompatible policy" {
             $output = Test-ExecutionPolicy -GetPolicy { 'Restricted' } 4>&1
-            $output | Should Match "⚠️ Incompatible execution policy: 'Restricted'"
+            $output | Should Match "Incompatible execution policy: 'Restricted'"
             $output | Should Match "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned"
         }
     }

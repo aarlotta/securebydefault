@@ -21,7 +21,7 @@ function Test-ExecutionPolicy {
 
     # Policy is incompatible - show warning and guidance
     Write-Host "DEBUG: Policy is incompatible"
-    Write-Warning "⚠️ Incompatible execution policy: '$currentPolicy'. Please run:"
+    Write-Warning "Incompatible execution policy: '$currentPolicy'. Please run:"
     Write-Host "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned" -ForegroundColor Yellow
     return $false
 } 
