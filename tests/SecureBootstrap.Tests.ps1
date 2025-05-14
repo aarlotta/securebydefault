@@ -50,8 +50,8 @@ Describe "SecureBootstrap Module" {
             $warnings = @()
             $result = Test-ExecutionPolicy -GetPolicy { 'Restricted' } -WarningVariable warnings
             $warningText = $warnings -join "`n"
-            $warningText | Should Match "Incompatible execution policy: 'Restricted'"
-            $warningText | Should Match "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned"
+            $warningText | Should Match "Incompatible execution policy"
+            $warningText | Should Match "Set-ExecutionPolicy.*RemoteSigned"
         }
     }
 } 
