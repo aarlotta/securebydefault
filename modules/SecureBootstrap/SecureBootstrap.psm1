@@ -10,7 +10,7 @@
 # Export public functions
 Export-ModuleMember -Function @(
     "New-CodeSigningCertificate",
-    "Sign-Scripts",
+    "Sign-Script",
     "Write-CursorPromptLog",
     "Add-CertificateToTrustedStore"
 ) 

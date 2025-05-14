@@ -14,6 +14,7 @@
     Prompt 001
 #>
 
+[CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [switch]$Force
 )
@@ -30,51 +31,63 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 # Check execution policy and provide guidance if needed
 $currentPolicy = Get-ExecutionPolicy
 if ($currentPolicy -eq 'Restricted') {
-    Write-Host "`n$WARNING_SYMBOL  PowerShell execution policy is currently set to 'Restricted'" -ForegroundColor Yellow
-    Write-Host "To run this script, you need to change the execution policy. You have two options:" -ForegroundColor Yellow
-    Write-Host "`nOption 1 - Temporary (Recommended for this script):" -ForegroundColor Cyan
-    Write-Host "    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass" -ForegroundColor White
-    Write-Host "    Then run this script again." -ForegroundColor White
-    Write-Host "`nOption 2 - Permanent (Requires Administrator privileges):" -ForegroundColor Cyan
-    Write-Host "    Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned" -ForegroundColor White
-    Write-Host "    Then run this script again." -ForegroundColor White
-    Write-Host "`nFor more information, visit: https://go.microsoft.com/fwlink/?LinkID=135170" -ForegroundColor Yellow
+    Write-Warning "PowerShell execution policy is currently set to 'Restricted'"
+    Write-Information "To run this script, you need to change the execution policy. You have two options:"
+    Write-Information "`nOption 1 - Temporary (Recommended for this script):"
+    Write-Information "    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass"
+    Write-Information "    Then run this script again."
+    Write-Information "`nOption 2 - Permanent (Requires Administrator privileges):"
+    Write-Information "    Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned"
+    Write-Information "    Then run this script again."
+    Write-Information "`nFor more information, visit: https://go.microsoft.com/fwlink/?LinkID=135170"
     exit 1
 }
 
 # Function to check if Git is initialized
 function Test-GitInitialized {
+    [CmdletBinding()]
+    param()
     return Test-Path -Path ".git" -PathType Container
 }
 
 # Function to create directory if it doesn't exist
-function New-DirectoryIfNotExists {
+function New-DirectoryIfMissing {
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param (
+        [Parameter(Mandatory = $true)]
         [string]$Path
     )
     if (-not (Test-Path -Path $Path -PathType Container)) {
-        New-Item -Path $Path -ItemType Directory -Force | Out-Null
-        Write-Host "Created directory: $Path"
+        if ($PSCmdlet.ShouldProcess($Path, "Create directory")) {
+            New-Item -Path $Path -ItemType Directory -Force | Out-Null
+            Write-Verbose "Created directory: $Path"
+        }
     }
 }
 
 # Function to create file if it doesn't exist
-function New-FileIfNotExists {
+function New-FileIfMissing {
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param (
+        [Parameter(Mandatory = $true)]
         [string]$Path,
         [string]$Content = ""
     )
     if (-not (Test-Path -Path $Path -PathType Leaf)) {
-        New-Item -Path $Path -ItemType File -Force | Out-Null
-        if ($Content) {
-            [System.IO.File]::WriteAllText($Path, $Content, [System.Text.Encoding]::UTF8)
+        if ($PSCmdlet.ShouldProcess($Path, "Create file")) {
+            New-Item -Path $Path -ItemType File -Force | Out-Null
+            if ($Content) {
+                [System.IO.File]::WriteAllText($Path, $Content, [System.Text.Encoding]::UTF8)
+            }
+            Write-Verbose "Created file: $Path"
         }
-        Write-Host "Created file: $Path"
     }
 }
 
 # Function to configure Git commit template
 function Set-GitCommitTemplate {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    param()
     $templatePath = ".commit-template.txt"
     $templateContent = @"
 # <type>(<scope>): <short summary>
@@ -85,48 +98,58 @@ function Set-GitCommitTemplate {
 "@
 
     # Create template file if it doesn't exist
-    New-FileIfNotExists -Path $templatePath -Content $templateContent
+    New-FileIfMissing -Path $templatePath -Content $templateContent
 
     # Check if global template is already configured
     $currentTemplate = git config --global commit.template
     if ($currentTemplate) {
-        Write-Host "$INFO_SYMBOL Global Git commit template already configured." -ForegroundColor Cyan
+        Write-Verbose "Global Git commit template already configured."
     } else {
-        git config --global commit.template $templatePath
-        Write-Host "Configured global Git commit template" -ForegroundColor Green
+        if ($PSCmdlet.ShouldProcess("Global Git config", "Set commit template")) {
+            git config --global commit.template $templatePath
+            Write-Verbose "Configured global Git commit template"
+        }
     }
 }
 
 # Function to create initial commit
 function New-InitialCommit {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    param()
     if (-not (git status --porcelain)) {
-        Write-Host "No changes to commit" -ForegroundColor Yellow
+        Write-Verbose "No changes to commit"
         return
     }
 
-    git add .
-    git commit -m "chore(init): initialize secure project structure and git metadata"
-    Write-Host "Created initial commit" -ForegroundColor Green
+    if ($PSCmdlet.ShouldProcess("Git repository", "Create initial commit")) {
+        git add .
+        git commit -m "chore(init): initialize secure project structure and git metadata"
+        Write-Verbose "Created initial commit"
+    }
 }
 
 # Main script execution
-Write-Host "Initializing Secure PowerShell Module project structure..." -ForegroundColor Cyan
+Write-Verbose "Initializing Secure PowerShell Module project structure..."
 
 # Handle Git initialization
 if (Test-GitInitialized) {
     if ($Force) {
-        Write-Host "Force flag detected. Removing existing Git repository..." -ForegroundColor Yellow
-        Remove-Item -Path ".git" -Recurse -Force
-        Write-Host "Initializing new Git repository..." -ForegroundColor Yellow
-        git init | Out-Null
-        Write-Host "Git repository reinitialized successfully." -ForegroundColor Green
+        Write-Warning "Force flag detected. Removing existing Git repository..."
+        if ($PSCmdlet.ShouldProcess(".git", "Remove directory")) {
+            Remove-Item -Path ".git" -Recurse -Force
+            Write-Verbose "Initializing new Git repository..."
+            git init | Out-Null
+            Write-Verbose "Git repository reinitialized successfully."
+        }
     } else {
-        Write-Host "Git repository already exists. Use -Force to reinitialize." -ForegroundColor Yellow
+        Write-Warning "Git repository already exists. Use -Force to reinitialize."
     }
 } else {
-    Write-Host "Initializing Git repository..." -ForegroundColor Yellow
-    git init | Out-Null
-    Write-Host "Git repository initialized successfully." -ForegroundColor Green
+    Write-Verbose "Initializing Git repository..."
+    if ($PSCmdlet.ShouldProcess("Git repository", "Initialize")) {
+        git init | Out-Null
+        Write-Verbose "Git repository initialized successfully."
+    }
 }
 
 # Create required directories
@@ -137,11 +160,11 @@ $directories = @(
 )
 
 foreach ($dir in $directories) {
-    New-DirectoryIfNotExists -Path $dir
+    New-DirectoryIfMissing -Path $dir
 }
 
 # Create cursor_prompt.log if it doesn't exist
-New-FileIfNotExists -Path "cursor_prompt.log"
+New-FileIfMissing -Path "cursor_prompt.log"
 
 # Create .gitignore if it doesn't exist
 $gitignorePath = ".gitignore"
@@ -156,13 +179,15 @@ certs/*.pfx
 "@
 
 if (-not (Test-Path -Path $gitignorePath -PathType Leaf)) {
-    New-FileIfNotExists -Path $gitignorePath -Content $gitignoreContent
+    New-FileIfMissing -Path $gitignorePath -Content $gitignoreContent
 } else {
     # Normalize line endings and ensure UTF-8 encoding
     $currentContent = Get-Content -Path $gitignorePath -Raw
     if ($currentContent -ne $gitignoreContent) {
-        [System.IO.File]::WriteAllText($gitignorePath, $gitignoreContent, [System.Text.Encoding]::UTF8)
-        Write-Host "Updated .gitignore file with normalized line endings" -ForegroundColor Green
+        if ($PSCmdlet.ShouldProcess($gitignorePath, "Update content")) {
+            [System.IO.File]::WriteAllText($gitignorePath, $gitignoreContent, [System.Text.Encoding]::UTF8)
+            Write-Verbose "Updated .gitignore file with normalized line endings"
+        }
     }
 }
 
@@ -174,4 +199,4 @@ if (-not (git rev-parse --verify HEAD 2>$null)) {
     New-InitialCommit
 }
 
-Write-Host "`n$SUCCESS_SYMBOL Secure project structure initialized. Ready for module development." -ForegroundColor Green 
+Write-Verbose "Secure project structure initialized. Ready for module development." 

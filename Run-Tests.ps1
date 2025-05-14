@@ -9,20 +9,20 @@ if (-not (Get-Module -ListAvailable -Name PSScriptAnalyzer)) {
 }
 
 # Run ScriptAnalyzer first
-Write-Host "Running PSScriptAnalyzer..." -ForegroundColor Cyan
+Write-Verbose "Running PSScriptAnalyzer..."
 $analyzerResults = Invoke-ScriptAnalyzer -Path .\modules,.\tests -Recurse -Severity Error
 if ($analyzerResults) {
     Write-Warning "PSScriptAnalyzer found issues:"
     $analyzerResults | Format-Table -AutoSize
     exit 1
 }
-Write-Host "PSScriptAnalyzer passed." -ForegroundColor Green
+Write-Verbose "PSScriptAnalyzer passed."
 
 # Run Pester tests
-Write-Host "Running Pester tests..." -ForegroundColor Cyan
+Write-Verbose "Running Pester tests..."
 $testResults = Invoke-Pester -Path .\tests -PassThru
 if ($testResults.FailedCount -gt 0) {
     Write-Warning "Tests failed: $($testResults.FailedCount) failed, $($testResults.PassedCount) passed"
     exit 1
 }
-Write-Host "All tests passed: $($testResults.PassedCount) passed" -ForegroundColor Green 
+Write-Verbose "All tests passed: $($testResults.PassedCount) passed" 
