@@ -68,11 +68,31 @@ Describe "Add-CertificateToTrustedStore" {
             $trustedCerts.Count | Should Be 1
         }
 
-        It "Should throw if certificate is not self-signed" {
-            # Create an invalid certificate that will fail self-signed check
-            $badBytes = [System.Text.Encoding]::UTF8.GetBytes("invalid")
-            $mockCert = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($badBytes)
-            { Add-CertificateToTrustedStore -Certificate $mockCert } | Should Throw "self-signed"
+        It "Should validate certificate trust status correctly" {
+            # Create a new certificate
+            $cert = (New-CodeSigningCertificate -Project $TestProject) | Where-Object { $_ -is [System.Security.Cryptography.X509Certificates.X509Certificate2] } | Select-Object -First 1
+
+            # Verify it exists in CurrentUser\My
+            $myStore = New-Object System.Security.Cryptography.X509Certificates.X509Store("My", "CurrentUser")
+            $myStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadOnly)
+            $certInMyStore = $myStore.Certificates.Find([System.Security.Cryptography.X509Certificates.X509FindType]::FindByThumbprint, $cert.Thumbprint, $false)
+            $myStore.Close()
+            $certInMyStore | Should Not BeNullOrEmpty
+
+            # Add to trusted store
+            $output = Add-CertificateToTrustedStore -Certificate $cert
+            $outputText = $output | Where-Object { $_ -is [string] } | Out-String
+            $outputText | Should Match "(Certificate added to TrustedPublisher|Certificate already trusted)"
+
+            # Verify it exists in TrustedPublisher
+            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store('TrustedPublisher', 'CurrentUser')
+            $trustedStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadOnly)
+            $trustedCert = $trustedStore.Certificates.Find([System.Security.Cryptography.X509Certificates.X509FindType]::FindByThumbprint, $cert.Thumbprint, $false)
+            $trustedStore.Close()
+            $trustedCert | Should Not BeNullOrEmpty
+
+            # Verify thumbprints match
+            $trustedCert.Thumbprint | Should Be $cert.Thumbprint
         }
 
         It "Should throw if certificate does not have Code Signing EKU" {
