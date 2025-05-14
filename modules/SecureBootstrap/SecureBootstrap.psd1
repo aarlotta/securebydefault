@@ -7,7 +7,7 @@
     Copyright = '(c) 2025 BAX IT SERVICES INC. All rights reserved.'
     Description = 'A secure PowerShell module for bootstrapping secure environments'
     PowerShellVersion = '5.1'
-    FunctionsToExport = @('New-CodeSigningCertificate', 'Sign-Scripts')
+    FunctionsToExport = @('New-CodeSigningCertificate', 'Sign-Scripts', 'Write-CursorPromptLog')
     CmdletsToExport = @()
     VariablesToExport = @()
     AliasesToExport = @()
