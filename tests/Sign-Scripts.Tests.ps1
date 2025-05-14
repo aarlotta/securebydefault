@@ -21,6 +21,20 @@ Describe "Sign-Scripts" {
             }
         }
 
+        It "Should have a trusted code signing certificate" {
+            # Verify certificate exists and is trusted
+            $cert | Should Not BeNullOrEmpty
+            $cert.EnhancedKeyUsageList | Should Match "Code Signing"
+            
+            # Check if certificate is in TrustedPublisher store
+            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store("TrustedPublisher", "CurrentUser")
+            $trustedStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadOnly)
+            $trustedCert = $trustedStore.Certificates.Find([System.Security.Cryptography.X509Certificates.X509FindType]::FindByThumbprint, $cert.Thumbprint, $false)
+            $trustedStore.Close()
+            
+            $trustedCert | Should Not BeNullOrEmpty
+        }
+
         It "Should sign all .ps1 files in the target path" {
             # Mock Set-AuthenticodeSignature to avoid actual signing
             Mock Set-AuthenticodeSignature {

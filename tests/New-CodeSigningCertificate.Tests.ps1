@@ -64,9 +64,12 @@ Describe "New-CodeSigningCertificate" {
                 Where-Object { $_.Subject -eq $TestSubject } | 
                 ForEach-Object { Remove-Item $_.PSPath -Force }
 
+            # Get the certificate and filter for the X509Certificate2 object
             $cert = New-CodeSigningCertificate -Project $TestProject
-            $cert | Should Not BeNullOrEmpty
-            $cert[0].GetType().FullName | Should Be "System.Security.Cryptography.X509Certificates.X509Certificate2"
+            $actualCert = $cert | Where-Object { $_ -is [System.Security.Cryptography.X509Certificates.X509Certificate2] }
+            
+            $actualCert | Should Not BeNullOrEmpty
+            $actualCert.GetType().FullName | Should Be "System.Security.Cryptography.X509Certificates.X509Certificate2"
         }
 
         It "Should not throw exceptions when invoked" {
