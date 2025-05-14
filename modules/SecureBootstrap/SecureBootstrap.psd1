@@ -9,7 +9,7 @@
     PowerShellVersion = '5.1'
     FunctionsToExport = @(
         "New-CodeSigningCertificate",
-        "Sign-Script",
+        "Sign-Scripts",
         "Write-CursorPromptLog",
         "Add-CertificateToTrustedStore"
     )
