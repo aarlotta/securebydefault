@@ -24,7 +24,8 @@ Describe "New-CodeSigningCertificate" {
 
             # First call should create a new certificate
             $output = New-CodeSigningCertificate -Project $TestProject 4>&1
-            $output | Should Match "Created new self-signed code signing certificate"
+            $outputText = $output -join "`n"
+            $outputText | Should Match "Created new self-signed code signing certificate"
             
             # Verify certificate exists in store
             $cert = Get-ChildItem -Path Cert:\CurrentUser\My | 
@@ -48,7 +49,8 @@ Describe "New-CodeSigningCertificate" {
 
             # Second call should reuse the certificate
             $output = New-CodeSigningCertificate -Project $TestProject 4>&1
-            $output | Should Match "Reusing existing certificate"
+            $outputText = $output -join "`n"
+            $outputText | Should Match "Reusing existing certificate"
 
             # Verify no new certificate was created
             $finalCount = (Get-ChildItem -Path Cert:\CurrentUser\My | 
@@ -64,7 +66,7 @@ Describe "New-CodeSigningCertificate" {
 
             $cert = New-CodeSigningCertificate -Project $TestProject
             $cert | Should Not BeNullOrEmpty
-            $cert.GetType().FullName | Should Be "System.Security.Cryptography.X509Certificates.X509Certificate2"
+            $cert[0].GetType().FullName | Should Be "System.Security.Cryptography.X509Certificates.X509Certificate2"
         }
 
         It "Should not throw exceptions when invoked" {
@@ -100,7 +102,8 @@ Describe "New-CodeSigningCertificate" {
 
             # Call function and capture output
             $output = New-CodeSigningCertificate -Project $TestProject 4>&1
-            $output | Should Match "Exported certificate to"
+            $outputText = $output -join "`n"
+            $outputText | Should Match "Exported certificate to"
 
             # Verify file exists
             Test-Path "certs/dev-signing.pfx" | Should Be $true
@@ -122,7 +125,8 @@ Describe "New-CodeSigningCertificate" {
 
             # Call function again and capture output
             $output = New-CodeSigningCertificate -Project $TestProject 4>&1
-            $output | Should Match "Certificate already exported"
+            $outputText = $output -join "`n"
+            $outputText | Should Match "Certificate already exported"
 
             # Verify file wasn't modified
             $afterTime = (Get-Item "certs/dev-signing.pfx").LastWriteTime
