@@ -1,28 +1,48 @@
 # Run-Tests.ps1
-# Script to run all tests for the SecureBootstrap module
+# Script to run all tests and analysis checks
 
-# Ensure PSScriptAnalyzer is installed
-if (-not (Get-Module -ListAvailable -Name PSScriptAnalyzer)) {
-    Write-Warning "PSScriptAnalyzer module not found. Installing..."
-    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Confirm:$false
-    Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser -Confirm:$false
-}
+# Stop on any error
+$ErrorActionPreference = "Stop"
 
-# Run ScriptAnalyzer first
-Write-Verbose "Running PSScriptAnalyzer..."
-$analyzerResults = Invoke-ScriptAnalyzer -Path .\modules,.\tests -Recurse -Severity Error
-if ($analyzerResults) {
-    Write-Warning "PSScriptAnalyzer found issues:"
-    $analyzerResults | Format-Table -AutoSize
-    exit 1
+# Define paths to analyze
+$scriptPaths = @(
+    '.\modules\SecureBootstrap',
+    '.\tests'
+)
+
+# Track overall status
+$hasErrors = $false
+
+# Run ScriptAnalyzer on each path
+foreach ($path in $scriptPaths) {
+    Write-Host "`nAnalyzing $path..." -ForegroundColor Cyan
+    $results = Invoke-ScriptAnalyzer -Path $path -Recurse -Severity Error
+
+    if ($results) {
+        Write-Host "Found $($results.Count) issues:" -ForegroundColor Yellow
+        $results | Format-Table -AutoSize
+        $hasErrors = $true
+    } else {
+        Write-Host "No issues found." -ForegroundColor Green
+    }
 }
-Write-Verbose "PSScriptAnalyzer passed."
 
 # Run Pester tests
-Write-Verbose "Running Pester tests..."
-$testResults = Invoke-Pester -Path .\tests -PassThru
-if ($testResults.FailedCount -gt 0) {
-    Write-Warning "Tests failed: $($testResults.FailedCount) failed, $($testResults.PassedCount) passed"
-    exit 1
+Write-Host "`nRunning Pester tests..." -ForegroundColor Cyan
+Invoke-Pester -Path .\tests -EnableExit
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "`nPester tests failed." -ForegroundColor Red
+    $hasErrors = $true
+} else {
+    Write-Host "`nAll tests passed." -ForegroundColor Green
 }
-Write-Verbose "All tests passed: $($testResults.PassedCount) passed"
+
+# Final status
+if ($hasErrors) {
+    Write-Host "`n❌ Some checks failed. Please fix the issues above." -ForegroundColor Red
+    exit 1
+} else {
+    Write-Host "`n✅ All checks passed successfully!" -ForegroundColor Green
+    exit 0
+}
