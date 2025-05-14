@@ -1,0 +1,23 @@
+# .commit-template.txt
+
+# <type>(<scope>): <short summary>
+#
+# Commit types:
+#   feat     = new feature
+#   fix      = bug fix or issue resolution
+#   chore    = setup, config, tools, metadata, packaging
+#   docs     = documentation only
+#   style    = formatting, whitespace, etc. (no code change)
+#   refactor = code change that doesn't fix a bug or add a feature
+#   test     = adding or refactoring tests
+#   ci       = changes to CI/CD or pipeline
+#   perf     = performance improvements
+#
+# Examples:
+#   feat(module): add certificate generation function
+#   fix(tests): remove deprecated BeforeAll from Pester test
+#   chore(git): create initial commit template and .gitignore
+#   docs(readme): update usage instructions for module import
+#
+# Enter your commit message below this line:
+
