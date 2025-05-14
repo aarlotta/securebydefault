@@ -18,7 +18,7 @@ Describe "Add-CertificateToTrustedStore" {
                 ForEach-Object { Remove-Item $_.PSPath -Force }
 
             # Clean up from TrustedPublisher
-            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store("TrustedPublisher", "CurrentUser")
+            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store('TrustedPublisher', 'CurrentUser')
             $trustedStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadWrite)
             $trustedStore.Certificates | 
                 Where-Object { $_.Subject -eq $TestSubject } | 
@@ -31,12 +31,12 @@ Describe "Add-CertificateToTrustedStore" {
             $cert = New-CodeSigningCertificate -Project $TestProject
 
             # Add to trusted store
-            $output = Add-CertificateToTrustedStore -Certificate $cert 4>&1
+            $output = Add-CertificateToTrustedStore -Certificate $cert -Verbose 4>&1 | Where-Object { $_ -is [string] }
             $outputText = $output -join "`n"
-            $outputText | Should Match "✔️ Trusted certificate added"
+            $outputText | Should Match "Certificate added to TrustedPublisher"
 
             # Verify it's in TrustedPublisher
-            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store("TrustedPublisher", "CurrentUser")
+            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store('TrustedPublisher', 'CurrentUser')
             $trustedStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadOnly)
             $trustedCert = $trustedStore.Certificates.Find([System.Security.Cryptography.X509Certificates.X509FindType]::FindByThumbprint, $cert.Thumbprint, $false)
             $trustedStore.Close()
@@ -50,12 +50,12 @@ Describe "Add-CertificateToTrustedStore" {
             Add-CertificateToTrustedStore -Certificate $cert | Out-Null
 
             # Try to add again
-            $output = Add-CertificateToTrustedStore -Certificate $cert -Verbose 4>&1
+            $output = Add-CertificateToTrustedStore -Certificate $cert -Verbose 4>&1 | Where-Object { $_ -is [string] }
             $outputText = $output -join "`n"
             $outputText | Should Match "Certificate already trusted"
 
             # Verify only one instance exists
-            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store("TrustedPublisher", "CurrentUser")
+            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store('TrustedPublisher', 'CurrentUser')
             $trustedStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadOnly)
             $trustedCerts = $trustedStore.Certificates.Find([System.Security.Cryptography.X509Certificates.X509FindType]::FindByThumbprint, $cert.Thumbprint, $false)
             $trustedStore.Close()
@@ -90,7 +90,7 @@ Describe "Add-CertificateToTrustedStore" {
                 ForEach-Object { Remove-Item $_.PSPath -Force }
 
             # Clean up from TrustedPublisher
-            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store("TrustedPublisher", "CurrentUser")
+            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store('TrustedPublisher', 'CurrentUser')
             $trustedStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadWrite)
             $trustedStore.Certificates | 
                 Where-Object { $_.Subject -eq $TestSubject } | 

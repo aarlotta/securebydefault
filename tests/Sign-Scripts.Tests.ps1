@@ -1,4 +1,4 @@
-Describe "Sign-Scripts" {
+Describe "Sign-Script" {
     Context "When signing scripts" {
         # Create test certificate
         $cert = New-CodeSigningCertificate -Project "TestSecureSign"
@@ -27,7 +27,7 @@ Describe "Sign-Scripts" {
             $cert.EnhancedKeyUsageList | Should Match "Code Signing"
             
             # Check if certificate is in TrustedPublisher store
-            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store("TrustedPublisher", "CurrentUser")
+            $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store('TrustedPublisher', 'CurrentUser')
             $trustedStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadOnly)
             $trustedCert = $trustedStore.Certificates.Find([System.Security.Cryptography.X509Certificates.X509FindType]::FindByThumbprint, $cert.Thumbprint, $false)
             $trustedStore.Close()
@@ -44,7 +44,7 @@ Describe "Sign-Scripts" {
                 }
             }
 
-            $result = Sign-Scripts -Project "TestSecureSign" -TargetPath $TestDrive
+            $result = Sign-Script -Project "TestSecureSign" -TargetPath $TestDrive
 
             # Verify all files were signed
             $signedFiles = Get-ChildItem -Path $TestDrive -Recurse -Filter "*.ps1"
@@ -59,7 +59,7 @@ Describe "Sign-Scripts" {
         }
 
         It "Should throw when certificate is not found" {
-            { Sign-Scripts -Project "NonExistentProject" } | Should Throw "❌ Signing certificate not found for NonExistentProject"
+            { Sign-Script -Project "NonExistentProject" } | Should Throw "Signing certificate not found for NonExistentProject"
         }
 
         It "Should handle signing failures gracefully" {
@@ -68,7 +68,7 @@ Describe "Sign-Scripts" {
                 throw "Simulated signing failure"
             }
 
-            { Sign-Scripts -Project "TestSecureSign" -TargetPath $TestDrive } | Should Not Throw
+            { Sign-Script -Project "TestSecureSign" -TargetPath $TestDrive } | Should Not Throw
         }
 
         # Clean up test certificate
