@@ -165,26 +165,39 @@ New-FileIfMissing -Path "cursor_prompt.log"
 
 # Create .gitignore if it doesn't exist
 $gitignorePath = ".gitignore"
-$gitignoreContent = @"
-.vscode/
-*.log
-*.zip
-*.tmp
-*.bak
-*.DS_Store
-"@
+$entriesToAdd = @(
+    ".vscode/",
+    "*.log",
+    "*.zip",
+    "*.tmp",
+    "*.bak",
+    "*.DS_Store"
+)
 
-if (-not (Test-Path -Path $gitignorePath -PathType Leaf)) {
-    New-FileIfMissing -Path $gitignorePath -Content $gitignoreContent
-} else {
-    # Normalize line endings and ensure UTF-8 encoding
-    $currentContent = Get-Content -Path $gitignorePath -Raw
-    if ($currentContent -ne $gitignoreContent) {
-        if ($PSCmdlet.ShouldProcess($gitignorePath, "Update content")) {
-            [System.IO.File]::WriteAllText($gitignorePath, $gitignoreContent, [System.Text.Encoding]::UTF8)
-            Write-Verbose "Updated .gitignore file with normalized line endings"
+# Create .gitignore if it doesn't exist
+New-FileIfMissing -Path $gitignorePath
+
+$currentGitignore = @()
+if (Test-Path $gitignorePath) {
+    $currentGitignore = Get-Content -Path $gitignorePath -ErrorAction SilentlyContinue
+}
+
+$updated = $false
+
+foreach ($entry in $entriesToAdd) {
+    if (-not ($currentGitignore -contains $entry)) {
+        if ($PSCmdlet.ShouldProcess($gitignorePath, "Append missing .gitignore entry: $entry")) {
+            Add-Content -Path $gitignorePath -Value $entry
+            Write-Verbose "Appended .gitignore entry: $entry"
+            $updated = $true
         }
     }
+}
+
+if ($updated) {
+    Write-Verbose ".gitignore updated (entries added without overwriting)."
+} else {
+    Write-Verbose ".gitignore is already up to date."
 }
 
 # Configure Git commit template
