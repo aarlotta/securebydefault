@@ -3,6 +3,10 @@
 > **A curated collection of secure-by-default PowerShell scripts and tools.**  
 > Built for professionals who care about clarity, reliability, and safe defaults.
 
+[![GitHub Workflow Status](https://github.com/aarlotta/securebydefault/actions/workflows/apply-settings.yml/badge.svg)](https://github.com/aarlotta/securebydefault/actions/workflows/apply-settings.yml)
+[![Apache 2.0 License](https://img.shields.io/github/license/aarlotta/securebydefault)](LICENSE)
+[![Code Owners](https://img.shields.io/badge/maintainer-%40aarlotta-blue)](.github/CODEOWNERS)
+
 ---
 
 ## 🧭 Project Vision
@@ -37,13 +41,25 @@ This repo includes foundational tools like:
 
 ## 🧱 Why Minimal?
 
-Simplicity isn’t a limitation — it’s an advantage.
+Simplicity isn't a limitation — it's an advantage.
 
 - You know exactly what the script does.
 - You can safely build on top of it.
-- It’s ready for review, audit, or integration.
+- It's ready for review, audit, or integration.
 
 No bloat. No black-box behavior. Just clean PowerShell that works.
+
+---
+
+## 🛡️ How I Secure the Repo
+
+This repository enforces secure-by-default governance at every level:
+
+- [Branch Protection](.github/settings.yml) — Linear history, required reviews, no force pushes
+- [Code Ownership](.github/CODEOWNERS) — Clear accountability for all changes
+- [Security Policy](.github/SECURITY.md) — Defined process for vulnerability reporting
+- Automated Testing — All changes must pass Pester tests
+- Minimal Dependencies — Zero external requirements by default
 
 ---
 
@@ -65,7 +81,7 @@ No bloat. No black-box behavior. Just clean PowerShell that works.
 ## 🛡️ License
 
 This project is licensed under the [Apache License 2.0](LICENSE).  
-Free to use, adapt, and extend — just give credit where it’s due.
+Free to use, adapt, and extend — just give credit where it's due.
 
 ---
 
