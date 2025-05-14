@@ -1,59 +1,36 @@
 function New-CodeSigningCertificate {
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory = $false)]
+    param (
         [string]$Project = "SecureDevEnv"
     )
 
-    # Set certificate subject
-    $Subject = "CN=$Project Code Signing Cert"
-    
-    # Check if certificate already exists
-    $existingCert = Get-ChildItem -Path Cert:\CurrentUser\My | 
-        Where-Object { $_.Subject -eq $Subject }
-    
-    if ($existingCert) {
-        Write-Host "✅ Reusing existing certificate: $Subject"
-        $certificate = $existingCert
+    $subject = "CN=$Project Code Signing Cert"
+    $storePath = "Cert:\CurrentUser\My"
+    $pfxPath = "certs/dev-signing.pfx"
+
+    $cert = Get-ChildItem $storePath | Where-Object { $_.Subject -eq $subject }
+
+    if (-not $cert) {
+        Write-Host "Creating new self-signed certificate..."
+        $cert = New-SelfSignedCertificate `
+            -Subject $subject `
+            -CertStoreLocation $storePath `
+            -KeyExportPolicy Exportable `
+            -KeySpec Signature `
+            -NotAfter (Get-Date).AddYears(3)
+        Write-Host "Created certificate: $($cert.Subject)"
     }
     else {
-        # Create new certificate parameters
-        $params = @{
-            Subject = $Subject
-            KeyExportPolicy = 'Exportable'
-            KeySpec = 'Signature'
-            KeyUsage = 'DigitalSignature'
-            KeyAlgorithm = 'RSA'
-            KeyLength = 2048
-            HashAlgorithm = 'SHA256'
-            TextExtension = @(
-                "2.5.29.37={text}1.3.6.1.5.5.7.3.3" # Code Signing EKU
-            )
-            CertStoreLocation = 'Cert:\CurrentUser\My'
-            NotAfter = (Get-Date).AddYears(3)
-        }
-
-        # Create the certificate
-        $certificate = New-SelfSignedCertificate @params
-        Write-Host "🔐 Created new self-signed code signing certificate for project: $Subject"
+        Write-Host "Reusing existing certificate: $($cert.Subject)"
     }
 
-    # Ensure certs directory exists
-    $certPath = "certs"
-    if (-not (Test-Path $certPath)) {
-        New-Item -ItemType Directory -Path $certPath | Out-Null
-    }
-
-    # Export certificate if not already exported
-    $pfxPath = Join-Path $certPath "dev-signing.pfx"
-    if (Test-Path $pfxPath) {
-        Write-Host "📁 Certificate already exported to $pfxPath"
+    if (-not (Test-Path $pfxPath)) {
+        Write-Host "Exporting certificate to $pfxPath"
+        $securePassword = ConvertTo-SecureString -String "dev-password" -AsPlainText -Force
+        Export-PfxCertificate -Cert $cert -FilePath $pfxPath -Password $securePassword | Out-Null
     }
     else {
-        $securePassword = ConvertTo-SecureString -String "dev-password" -Force -AsPlainText
-        Export-PfxCertificate -Cert $certificate -FilePath $pfxPath -Password $securePassword
-        Write-Host "📤 Exported certificate to $pfxPath"
+        Write-Host "Certificate already exported to $pfxPath"
     }
 
-    return $certificate
-} 
+    return $cert
+}
