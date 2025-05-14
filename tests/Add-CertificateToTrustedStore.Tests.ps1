@@ -98,7 +98,9 @@ Describe "Add-CertificateToTrustedStore" {
         It "Should throw if certificate does not have Code Signing EKU" {
             # Create a certificate with only basic key usage and no EKU
             $badCert = New-SelfSignedCertificate -DnsName "InvalidCert" -CertStoreLocation "Cert:\CurrentUser\My" -KeyUsage DigitalSignature
-            $badCertWithNoEku = Get-ChildItem Cert:\CurrentUser\My | Where-Object { $_.Thumbprint -eq $badCert.Thumbprint }
+            $badCertWithNoEku = Get-ChildItem Cert:\CurrentUser\My | 
+                Where-Object { $_.Thumbprint -eq $badCert.Thumbprint } |
+                Select-Object -First 1
 
             { Add-CertificateToTrustedStore -Certificate $badCertWithNoEku } | Should Throw "Code Signing Enhanced Key Usage"
         }
