@@ -6,10 +6,10 @@ on:
       - main
     paths:
       - '.github/settings.yml'
-  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  actions: read
   administration: write
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
           gh api repos/${{ github.repository }}/branches/main/protection
 
       - name: Apply repository settings
-        uses: reposettings/action@v2
+        uses: reitermarkus/repo-settings@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           settings_file: .github/settings.yml 
