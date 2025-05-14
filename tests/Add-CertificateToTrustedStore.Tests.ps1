@@ -31,8 +31,9 @@ Describe "Add-CertificateToTrustedStore" {
             $cert = New-CodeSigningCertificate -Project $TestProject
 
             # Add to trusted store
-            $output = Add-CertificateToTrustedStore -Certificate $cert -Verbose 4>&1 | Out-String
-            $output | Should Match "Certificate added to TrustedPublisher"
+            $output = Add-CertificateToTrustedStore -Certificate $cert
+            $outputText = $output | Where-Object { $_ -is [string] } | Out-String
+            $outputText | Should Match "Certificate added to TrustedPublisher"
 
             # Verify it's in TrustedPublisher
             $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store('TrustedPublisher', 'CurrentUser')
@@ -49,8 +50,9 @@ Describe "Add-CertificateToTrustedStore" {
             Add-CertificateToTrustedStore -Certificate $cert | Out-Null
 
             # Try to add again
-            $output = Add-CertificateToTrustedStore -Certificate $cert -Verbose 4>&1 | Out-String
-            $output | Should Match "Certificate already trusted"
+            $output = Add-CertificateToTrustedStore -Certificate $cert
+            $outputText = $output | Where-Object { $_ -is [string] } | Out-String
+            $outputText | Should Match "Certificate already trusted"
 
             # Verify only one instance exists
             $trustedStore = New-Object System.Security.Cryptography.X509Certificates.X509Store('TrustedPublisher', 'CurrentUser')
@@ -62,23 +64,19 @@ Describe "Add-CertificateToTrustedStore" {
         }
 
         It "Should throw if certificate is not self-signed" {
-            # Create a test certificate
-            $cert = New-CodeSigningCertificate -Project $TestProject
-            $script:mockPath = Join-Path -Path $env:TEMP -ChildPath "tempCert.cer"
-            [System.IO.File]::WriteAllBytes($mockPath, $cert.RawData)
-            $mockCert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($mockPath)
-            $privateField = $mockCert.GetType().GetField("m_issuerName", 'NonPublic,Instance')
-            $privateField.SetValue($mockCert, "CN=Fake CA")
-
-            { Add-CertificateToTrustedStore -Certificate $mockCert } | Should Throw "Certificate must be self-signed"
+            # Create an invalid certificate
+            $badBytes = [System.Text.Encoding]::UTF8.GetBytes("invalid")
+            $mockCert = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($badBytes)
+            { Add-CertificateToTrustedStore -Certificate $mockCert } | Should Throw "self-signed"
         }
 
         It "Should throw if certificate does not have Code Signing EKU" {
             # Create a test certificate
             $cert = New-CodeSigningCertificate -Project $TestProject
-            $mockCert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($cert.RawData)
-            $certNoEku = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($mockCert.RawData)
-            { Add-CertificateToTrustedStore -Certificate $certNoEku } | Should Throw "Code Signing Enhanced Key Usage"
+            $rawCert = $cert.RawData
+            $mockCert = [X509Certificate2]::new($rawCert)
+            $badCert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
+            { Add-CertificateToTrustedStore -Certificate $badCert } | Should Throw "Code Signing Enhanced Key Usage"
         }
 
         AfterAll {

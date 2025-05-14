@@ -18,7 +18,7 @@ function New-CodeSigningCertificate {
 
     if (-not $cert) {
         if ($PSCmdlet.ShouldProcess($subject, "Create new self-signed code signing certificate")) {
-            Write-Verbose "Creating new self-signed code signing certificate"
+            Write-Output "Created new self-signed code signing certificate"
             $cert = New-SelfSignedCertificate `
                 -Subject $subject `
                 -CertStoreLocation $storePath `
@@ -28,19 +28,19 @@ function New-CodeSigningCertificate {
                 -NotAfter (Get-Date).AddYears(3)
         }
     } else {
-        Write-Verbose "Reusing existing certificate"
+        Write-Output "Reusing existing certificate"
     }
 
     if (-not (Test-Path $pfxPath)) {
         if ($PSCmdlet.ShouldProcess($pfxPath, "Export certificate to PFX file")) {
-            Write-Verbose "Exporting certificate to $pfxPath"
+            Write-Output "Exported certificate to $pfxPath"
             $securePassword = ConvertTo-SecureString -String $CertificatePassword -AsPlainText -Force
             Export-PfxCertificate -Cert $cert -FilePath $pfxPath -Password $securePassword | Out-Null
         }
     } else {
-        Write-Verbose "Certificate already exported to $pfxPath"
+        Write-Output "Certificate already exported to $pfxPath"
     }
 
-    # Return certificate object without verbose output
-    $cert | Select-Object -Property Subject, Thumbprint, NotAfter
+    # Return the certificate object
+    return $cert
 }

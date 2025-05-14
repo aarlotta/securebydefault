@@ -51,7 +51,7 @@ function Add-CertificateToTrustedStore {
         $trustedStore.Close()
 
         if ($certInTrustedStore) {
-            Write-Verbose "Certificate already trusted: $($Certificate.Subject)"
+            Write-Output "Certificate already trusted: $($Certificate.Subject)"
             return
         }
 
@@ -62,7 +62,7 @@ function Add-CertificateToTrustedStore {
             $trustedStore.Add($Certificate)
             $trustedStore.Close()
 
-            Write-Verbose "Certificate added to TrustedPublisher: $($Certificate.Subject)"
+            Write-Output "Certificate added to TrustedPublisher: $($Certificate.Subject)"
         }
     }
     catch {
