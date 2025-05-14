@@ -1,4 +1,4 @@
-# Initialize-SecureProject.ps1
+﻿# Initialize-SecureProject.ps1
 # Script to initialize the PowerShell Module project structure
 
 <#
@@ -144,8 +144,8 @@ if (-not (Test-GitInitialized)) {
         Write-Verbose "Git repository initialized."
 
         # Optional: Add default remote if missing
-        $origin = git remote get-url origin 2>$null
-        if (-not $origin) {
+        git remote get-url origin 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) {
             git remote add origin https://github.com/aarlotta/securebydefault
             Write-Verbose "Git remote 'origin' configured."
         }
@@ -153,14 +153,14 @@ if (-not (Test-GitInitialized)) {
 } else {
     Write-Verbose "Git repository already exists. Verifying remote..."
 
-    $origin = git remote get-url origin 2>$null
-    if (-not $origin) {
+    git remote get-url origin 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) {
         if ($PSCmdlet.ShouldProcess("Git", "Add missing remote origin")) {
             git remote add origin https://github.com/aarlotta/securebydefault
             Write-Verbose "Git remote 'origin' added."
         }
     } else {
-        Write-Verbose "Git remote 'origin' already set to: $origin"
+        Write-Verbose "Git remote 'origin' already set."
     }
 
     if ($Force) {
@@ -234,36 +234,36 @@ if ($CleanUp) {
     if (Test-Path $dockerPath) {
         if ($PSCmdlet.ShouldProcess($dockerPath, "Remove Docker environment folder")) {
             Remove-Item -Path $dockerPath -Recurse -Force
-            Write-Host "[SBD] 🧹 Docker environment removed: $dockerPath" -ForegroundColor Magenta
+            Write-Information -MessageData "[SBD] 🧹 Docker environment removed: $dockerPath" -InformationAction Continue
         }
     } else {
-        Write-Host "[SBD] No Docker environment found to clean." -ForegroundColor Yellow
+        Write-Information -MessageData "[SBD] No Docker environment found to clean." -InformationAction Continue
     }
 }
 
 # Docker prune option (clears unused images, containers, volumes)
 if ($PruneDocker) {
     if ($PSCmdlet.ShouldProcess("Docker", "Prune unused containers and images")) {
-        docker system prune -f | Out-Host
-        Write-Host "[SBD] 🧼 Docker system prune completed." -ForegroundColor Green
+        $null = docker system prune -f
+        Write-Information -MessageData "[SBD] 🧼 Docker system prune completed." -InformationAction Continue
     }
 }
 
 # Build or Rebuild Docker environment
 if ($BuildDocker -or $Rebuild) {
-    $params = @{
+    $dockerParams = @{
         Path        = $dockerPath
         ImageName   = "securebydefault/base"
         EnableTests = $true
     }
     if ($Rebuild) {
-        docker build --no-cache -t securebydefault/base $dockerPath | Out-Host
-        Write-Host "[SBD] 🔁 Docker image rebuilt (no cache)." -ForegroundColor Cyan
+        $null = docker build --no-cache -t securebydefault/base $dockerPath
+        Write-Information -MessageData "[SBD] 🔁 Docker image rebuilt (no cache)." -InformationAction Continue
     } else {
         if (-not (Get-Command New-SbdDockerEnvironment -ErrorAction SilentlyContinue)) {
             Import-Module ./modules/SecureBootstrap/SecureBootstrap.psd1 -Force
         }
-        New-SbdDockerEnvironment @params
+        New-SbdDockerEnvironment @dockerParams
     }
 }
 
