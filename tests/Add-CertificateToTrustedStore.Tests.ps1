@@ -96,18 +96,22 @@ Describe "Add-CertificateToTrustedStore" {
         }
 
         It "Should throw if certificate does not have Code Signing EKU" {
-            # Create a test certificate
-            $cert = (New-CodeSigningCertificate -Project $TestProject) | Where-Object { $_ -is [System.Security.Cryptography.X509Certificates.X509Certificate2] } | Select-Object -First 1
-            
-            # Create a new certificate without EKU
-            $badCert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
-            { Add-CertificateToTrustedStore -Certificate $badCert } | Should Throw "Code Signing Enhanced Key Usage"
+            # Create a certificate with only basic key usage and no EKU
+            $badCert = New-SelfSignedCertificate -DnsName "InvalidCert" -CertStoreLocation "Cert:\CurrentUser\My" -KeyUsage DigitalSignature
+            $badCertWithNoEku = Get-ChildItem Cert:\CurrentUser\My | Where-Object { $_.Thumbprint -eq $badCert.Thumbprint }
+
+            { Add-CertificateToTrustedStore -Certificate $badCertWithNoEku } | Should Throw "Code Signing Enhanced Key Usage"
         }
 
         AfterAll {
             # Clean up test certificates
             Get-ChildItem -Path Cert:\CurrentUser\My | 
                 Where-Object { $_.Subject -eq $TestSubject } | 
+                ForEach-Object { Remove-Item $_.PSPath -Force }
+
+            # Clean up InvalidCert
+            Get-ChildItem -Path Cert:\CurrentUser\My |
+                Where-Object { $_.Subject -like "*InvalidCert*" } |
                 ForEach-Object { Remove-Item $_.PSPath -Force }
 
             # Clean up from TrustedPublisher
