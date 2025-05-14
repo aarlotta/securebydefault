@@ -8,17 +8,18 @@
     Description = 'A PowerShell module for bootstrapping environments'
     PowerShellVersion = '5.1'
     FunctionsToExport = @(
-        "Write-CursorPromptLog"
+        "Write-CursorPromptLog",
+        "New-SecureDockerEnvironment"
     )
     CmdletsToExport = @()
     VariablesToExport = @()
     AliasesToExport = @()
     PrivateData = @{
         PSData = @{
-            Tags = @('bootstrap', 'automation', 'powershell')
+            Tags = @('bootstrap', 'automation', 'powershell', 'docker', 'security')
             ProjectUri = 'https://github.com/your/repo'
             LicenseUri = 'https://opensource.org/licenses/MIT'
-            ReleaseNotes = 'Initial commit with basic functionality.'
+            ReleaseNotes = 'Added secure Docker environment creation functionality.'
             Disclaimer = 'This module is part of a commercial automation project. Use at your own risk. Redistribution prohibited without license.'
         }
     }
