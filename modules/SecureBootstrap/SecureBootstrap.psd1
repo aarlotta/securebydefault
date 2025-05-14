@@ -5,23 +5,20 @@
     Author = 'Anderson Arlotta'
     CompanyName = 'BAX IT SERVICES INC'
     Copyright = '(c) 2025 BAX IT SERVICES INC. All rights reserved.'
-    Description = 'A secure PowerShell module for bootstrapping secure environments'
+    Description = 'A PowerShell module for bootstrapping environments'
     PowerShellVersion = '5.1'
     FunctionsToExport = @(
-        "New-CodeSigningCertificate",
-        "Sign-Script",
-        "Write-CursorPromptLog",
-        "Add-CertificateToTrustedStore"
+        "Write-CursorPromptLog"
     )
     CmdletsToExport = @()
     VariablesToExport = @()
     AliasesToExport = @()
     PrivateData = @{
         PSData = @{
-            Tags = @('secure', 'bootstrap', 'automation', 'powershell')
+            Tags = @('bootstrap', 'automation', 'powershell')
             ProjectUri = 'https://github.com/your/repo'
             LicenseUri = 'https://opensource.org/licenses/MIT'
-            ReleaseNotes = 'Initial commit with execution policy checker.'
+            ReleaseNotes = 'Initial commit with basic functionality.'
             Disclaimer = 'This module is part of a commercial automation project. Use at your own risk. Redistribution prohibited without license.'
         }
     }

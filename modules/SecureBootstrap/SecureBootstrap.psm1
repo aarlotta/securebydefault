@@ -1,16 +1,16 @@
 # SecureBootstrap.psm1
 # Main module file for SecureBootstrap
 
+# TODO: Future security enhancements could include:
+# - Code signing with trusted certificates
+# - Certificate-based script validation
+# - Secure bootstrapping with certificate trust chains
+# - Execution policy management with signed scripts
+
 # Dot source each function file explicitly
-. "$PSScriptRoot\Public\New-CodeSigningCertificate.ps1"
-. "$PSScriptRoot\Public\Sign-Script.ps1"
 . "$PSScriptRoot\Public\Write-CursorPromptLog.ps1"
-. "$PSScriptRoot\Public\Add-CertificateToTrustedStore.ps1"
 
 # Export public functions
 Export-ModuleMember -Function @(
-    "New-CodeSigningCertificate",
-    "Sign-Script",
-    "Write-CursorPromptLog",
-    "Add-CertificateToTrustedStore"
+    "Write-CursorPromptLog"
 ) 
