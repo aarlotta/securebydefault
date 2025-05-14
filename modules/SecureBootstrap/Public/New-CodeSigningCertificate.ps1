@@ -10,25 +10,22 @@ function New-CodeSigningCertificate {
     $cert = Get-ChildItem $storePath | Where-Object { $_.Subject -eq $subject }
 
     if (-not $cert) {
-        Write-Host "Creating new self-signed certificate..."
+        Write-Host "Created new self-signed code signing certificate for project: $subject"
         $cert = New-SelfSignedCertificate `
             -Subject $subject `
             -CertStoreLocation $storePath `
             -KeyExportPolicy Exportable `
             -KeySpec Signature `
             -NotAfter (Get-Date).AddYears(3)
-        Write-Host "Created certificate: $($cert.Subject)"
-    }
-    else {
-        Write-Host "Reusing existing certificate: $($cert.Subject)"
+    } else {
+        Write-Host "Reusing existing certificate: $subject"
     }
 
     if (-not (Test-Path $pfxPath)) {
-        Write-Host "Exporting certificate to $pfxPath"
+        Write-Host "Exported certificate to $pfxPath"
         $securePassword = ConvertTo-SecureString -String "dev-password" -AsPlainText -Force
         Export-PfxCertificate -Cert $cert -FilePath $pfxPath -Password $securePassword | Out-Null
-    }
-    else {
+    } else {
         Write-Host "Certificate already exported to $pfxPath"
     }
 

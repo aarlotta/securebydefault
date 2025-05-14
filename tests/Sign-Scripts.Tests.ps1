@@ -34,7 +34,7 @@ Describe "Sign-Scripts" {
 
             # Verify all files were signed
             $signedFiles = Get-ChildItem -Path $TestDrive -Recurse -Filter "*.ps1"
-            $result | Should -Be $signedFiles.Count
+            $result | Should Be $signedFiles.Count
 
             # Verify each file was processed
             foreach ($file in $signedFiles) {
@@ -45,7 +45,7 @@ Describe "Sign-Scripts" {
         }
 
         It "Should throw when certificate is not found" {
-            { Sign-Scripts -Project "NonExistentProject" } | Should -Throw "❌ Signing certificate not found for NonExistentProject"
+            { Sign-Scripts -Project "NonExistentProject" } | Should Throw "❌ Signing certificate not found for NonExistentProject"
         }
 
         It "Should handle signing failures gracefully" {
@@ -54,7 +54,7 @@ Describe "Sign-Scripts" {
                 throw "Simulated signing failure"
             }
 
-            { Sign-Scripts -Project "TestSecureSign" -TargetPath $TestDrive } | Should -Not -Throw
+            { Sign-Scripts -Project "TestSecureSign" -TargetPath $TestDrive } | Should Not Throw
         }
 
         # Clean up test certificate
