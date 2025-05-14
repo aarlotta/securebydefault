@@ -1,0 +1,7 @@
+.vscode/
+certs/*.pfx
+*.log
+*.zip
+*.tmp
+*.bak
+*.DS_Store
