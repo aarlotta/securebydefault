@@ -8,10 +8,24 @@ on:
       - '.github/settings.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  administration: write
+
 jobs:
   apply-settings:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug - Print Event Payload
+        run: |
+          echo "Event payload:"
+          cat $GITHUB_EVENT_PATH
+          echo "---"
+
+      - name: Debug - Check Current Protection
+        run: |
+          gh api repos/${{ github.repository }}/branches/main/protection
+
       - name: Apply repository settings
         uses: reposettings/action@v2
         with:
