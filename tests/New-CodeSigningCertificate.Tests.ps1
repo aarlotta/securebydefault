@@ -16,6 +16,11 @@ Describe "New-CodeSigningCertificate" {
             New-Item -ItemType Directory -Path "certs" | Out-Null
         }
 
+        BeforeAll {
+            # Reset test environment
+            . $here\Reset-TestEnvironment.ps1
+        }
+
         It "Should create a new certificate on first call" {
             # Clean up any existing test certificates
             Get-ChildItem -Path Cert:\CurrentUser\My | 

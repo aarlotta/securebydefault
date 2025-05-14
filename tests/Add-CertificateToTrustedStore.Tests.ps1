@@ -11,6 +11,11 @@ Describe "Add-CertificateToTrustedStore" {
         $TestProject = "TestTrustStore"
         $TestSubject = "CN=$TestProject Code Signing Cert"
 
+        BeforeAll {
+            # Reset test environment
+            . $here\Reset-TestEnvironment.ps1
+        }
+
         BeforeEach {
             # Clean up any existing test certificates
             Get-ChildItem -Path Cert:\CurrentUser\My | 
