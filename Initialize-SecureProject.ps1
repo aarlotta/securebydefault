@@ -9,6 +9,20 @@
     directory structure, and configuration files. The script is idempotent and can be run multiple times
     safely. It does not reinitialize Git or remove remotes even when -Force is used. Instead, it validates
     and supplements the repository configuration.
+.PARAMETER Force
+    Forces reinitialization of certain components while preserving Git history.
+.PARAMETER BuildDocker
+    Generates a secure-by-default Docker environment using SecureBootstrap.
+.PARAMETER Rebuild
+    Rebuilds the Docker image from scratch using --no-cache.
+.PARAMETER CleanUp
+    Deletes the Docker environment folder (resources/docker).
+.PARAMETER PruneDocker
+    Cleans up unused Docker containers, images, and volumes using `docker system prune`.
+.EXAMPLE
+    .\Initialize-SecureProject.ps1 -BuildDocker -EnableTests
+.EXAMPLE
+    .\Initialize-SecureProject.ps1 -Rebuild -PruneDocker
 .VERSION
     1.0.0
 .PROMPT_ID
@@ -17,7 +31,11 @@
 
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
-    [switch]$Force
+    [switch]$Force,
+    [switch]$BuildDocker,
+    [switch]$Rebuild,
+    [switch]$CleanUp,
+    [switch]$PruneDocker
 )
 
 # Set UTF-8 encoding for proper emoji support
@@ -206,6 +224,47 @@ Set-GitCommitTemplate
 # Create initial commit if this is a new repository
 if (-not (git rev-parse --verify HEAD 2>$null)) {
     New-InitialCommit
+}
+
+# Docker environment operations
+$dockerPath = "resources/docker"
+
+# Cleanup option (deletes Docker environment)
+if ($CleanUp) {
+    if (Test-Path $dockerPath) {
+        if ($PSCmdlet.ShouldProcess($dockerPath, "Remove Docker environment folder")) {
+            Remove-Item -Path $dockerPath -Recurse -Force
+            Write-Host "[SBD] 🧹 Docker environment removed: $dockerPath" -ForegroundColor Magenta
+        }
+    } else {
+        Write-Host "[SBD] No Docker environment found to clean." -ForegroundColor Yellow
+    }
+}
+
+# Docker prune option (clears unused images, containers, volumes)
+if ($PruneDocker) {
+    if ($PSCmdlet.ShouldProcess("Docker", "Prune unused containers and images")) {
+        docker system prune -f | Out-Host
+        Write-Host "[SBD] 🧼 Docker system prune completed." -ForegroundColor Green
+    }
+}
+
+# Build or Rebuild Docker environment
+if ($BuildDocker -or $Rebuild) {
+    $params = @{
+        Path        = $dockerPath
+        ImageName   = "securebydefault/base"
+        EnableTests = $true
+    }
+    if ($Rebuild) {
+        docker build --no-cache -t securebydefault/base $dockerPath | Out-Host
+        Write-Host "[SBD] 🔁 Docker image rebuilt (no cache)." -ForegroundColor Cyan
+    } else {
+        if (-not (Get-Command New-SbdDockerEnvironment -ErrorAction SilentlyContinue)) {
+            Import-Module ./modules/SecureBootstrap/SecureBootstrap.psd1 -Force
+        }
+        New-SbdDockerEnvironment @params
+    }
 }
 
 Write-Verbose "Project structure initialized. Ready for module development."
