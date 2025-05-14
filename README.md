@@ -27,6 +27,46 @@ Whether you're writing internal tools, building CI/CD pipelines, or publishing r
 
 ---
 
+## 🧠 Getting Started Best Practices
+
+Before running the script, make sure PowerShell is allowed to execute local scripts:
+
+### 🔧 Set Execution Policy
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+```
+
+This allows local scripts to run securely while still protecting you from unsigned internet content.
+
+---
+
+### 📂 Recommended Setup Workflow
+
+1. **Go to a non-system disk (like `D:\` or `E:\`)** for a clean workspace:
+
+   ```powershell
+   cd E:\
+   ```
+
+2. **Create your new project folder**:
+
+   ```powershell
+   mkdir MyProject
+   cd MyProject
+   ```
+
+3. **Download the script** (manually or via browser/git):
+
+   * From GitHub: [https://github.com/aarlotta/securebydefault](https://github.com/aarlotta/securebydefault)
+
+4. **Run the bootstrap script**:
+
+   ```powershell
+   .\Initialize-SecureProject.ps1
+   ```
+
+---
+
 ## 🧪 Try It In Seconds
 
 ```powershell
@@ -88,6 +128,27 @@ Use Git tags to lock stable versions:
 git tag -a v1.0.0 -m "Initial secure bootstrap release"
 git push origin v1.0.0
 ```
+
+---
+
+## 🛑 Disclaimer
+
+This project is provided **as-is, without warranty**.
+Use it at your own risk. BAX IT SERVICES INC. and Anderson Arlotta assume no responsibility for any damages, data loss, or security issues resulting from its use.
+
+📌 **Free support is not provided.**
+This project is intended as a professional tool for experienced developers. If you require customization, support, or enhancements, please consider hiring the author.
+
+---
+
+## 🤝 Sponsor or Hire the Creator
+
+If you value secure, production-quality engineering tools like this, consider supporting the developer behind it.
+
+💼 **Hire for custom infrastructure, automation, or PowerShell projects**
+💰 **Support ongoing open-source work**
+
+👉 [**Become a Sponsor on GitHub**](https://github.com/sponsors/aarlotta?frequency=one-time&sponsor=aarlotta)
 
 ---
 
