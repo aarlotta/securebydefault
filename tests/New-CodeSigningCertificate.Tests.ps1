@@ -1,28 +1,26 @@
-# Pester 5+ tests for New-CodeSigningCertificate
+# Pester 3.4.0 tests for New-CodeSigningCertificate
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $modulePath = Resolve-Path (Join-Path $here '..\modules\SecureBootstrap\SecureBootstrap.psd1')
 
-BeforeAll {
-    # Import the module
-    Import-Module $modulePath -Force
-
-    # Define test project name
-    $TestProject = "TestProject"
-    $TestSubject = "CN=$TestProject Code Signing Cert"
-
-    # Clean up any existing test certificates
-    Get-ChildItem -Path Cert:\CurrentUser\My | 
-        Where-Object { $_.Subject -eq $TestSubject } | 
-        ForEach-Object { Remove-Item $_.PSPath -Force }
-
-    # Clean up any existing test exports
-    if (Test-Path "certs/dev-signing.pfx") {
-        Remove-Item "certs/dev-signing.pfx" -Force
-    }
-}
+# Import the module
+Import-Module $modulePath -Force
 
 Describe "New-CodeSigningCertificate" {
     Context "Certificate Creation and Reuse" {
+        # Define test project name
+        $TestProject = "TestProject"
+        $TestSubject = "CN=$TestProject Code Signing Cert"
+
+        # Clean up any existing test certificates
+        Get-ChildItem -Path Cert:\CurrentUser\My | 
+            Where-Object { $_.Subject -eq $TestSubject } | 
+            ForEach-Object { Remove-Item $_.PSPath -Force }
+
+        # Clean up any existing test exports
+        if (Test-Path "certs/dev-signing.pfx") {
+            Remove-Item "certs/dev-signing.pfx" -Force
+        }
+
         It "Should create a new certificate on first call" {
             # First call should create a new certificate
             $output = New-CodeSigningCertificate -Project $TestProject 4>&1
@@ -58,6 +56,10 @@ Describe "New-CodeSigningCertificate" {
     }
 
     Context "Certificate Export" {
+        # Define test project name
+        $TestProject = "TestProject"
+        $TestSubject = "CN=$TestProject Code Signing Cert"
+
         It "Should export certificate to PFX file on first run" {
             # Clean up any existing export
             if (Test-Path "certs/dev-signing.pfx") {

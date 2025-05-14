@@ -1,19 +1,14 @@
 # SecureBootstrap.psm1
 # Main module file for SecureBootstrap
 
-# Get all function files
-$Public = @(Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue)
-$Private = @(Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue)
-
-# Dot source the files
-foreach ($import in @($Public + $Private)) {
-    try {
-        . $import.FullName
-    }
-    catch {
-        Write-Error "Failed to import function $($import.FullName): $_"
-    }
-}
+# Dot source each function file explicitly
+. "$PSScriptRoot\Public\New-CodeSigningCertificate.ps1"
+. "$PSScriptRoot\Public\Sign-Scripts.ps1"
+. "$PSScriptRoot\Public\Write-CursorPromptLog.ps1"
 
 # Export public functions
-Export-ModuleMember -Function $Public.BaseName 
+Export-ModuleMember -Function @(
+    "New-CodeSigningCertificate",
+    "Sign-Scripts",
+    "Write-CursorPromptLog"
+) 

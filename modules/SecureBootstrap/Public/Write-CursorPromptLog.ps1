@@ -40,6 +40,6 @@ $scriptContent
         Write-Host "📝 Logged Prompt $promptNumber from $ScriptPath to $LogPath"
     }
     catch {
-        Write-Error "Failed to write to log file: $_"
+        Write-Error "Failed to write to log file: $($_.Exception.Message)"
     }
 } 
