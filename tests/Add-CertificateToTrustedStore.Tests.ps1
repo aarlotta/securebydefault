@@ -32,8 +32,8 @@ Describe "Add-CertificateToTrustedStore" {
         }
 
         It "Should add a valid certificate to TrustedPublisher" {
-            # Create a test certificate
-            $cert = New-CodeSigningCertificate -Project $TestProject
+            # Create a test certificate and ensure we get a single X509Certificate2 object
+            $cert = (New-CodeSigningCertificate -Project $TestProject) | Where-Object { $_ -is [System.Security.Cryptography.X509Certificates.X509Certificate2] } | Select-Object -First 1
 
             # Add to trusted store
             $output = Add-CertificateToTrustedStore -Certificate $cert
@@ -51,7 +51,7 @@ Describe "Add-CertificateToTrustedStore" {
 
         It "Should not add certificate if already trusted" {
             # Create and add certificate
-            $cert = New-CodeSigningCertificate -Project $TestProject
+            $cert = (New-CodeSigningCertificate -Project $TestProject) | Where-Object { $_ -is [System.Security.Cryptography.X509Certificates.X509Certificate2] } | Select-Object -First 1
             Add-CertificateToTrustedStore -Certificate $cert | Out-Null
 
             # Try to add again
@@ -69,7 +69,7 @@ Describe "Add-CertificateToTrustedStore" {
         }
 
         It "Should throw if certificate is not self-signed" {
-            # Create an invalid certificate
+            # Create an invalid certificate that will fail self-signed check
             $badBytes = [System.Text.Encoding]::UTF8.GetBytes("invalid")
             $mockCert = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($badBytes)
             { Add-CertificateToTrustedStore -Certificate $mockCert } | Should Throw "self-signed"
@@ -77,9 +77,9 @@ Describe "Add-CertificateToTrustedStore" {
 
         It "Should throw if certificate does not have Code Signing EKU" {
             # Create a test certificate
-            $cert = New-CodeSigningCertificate -Project $TestProject
-            $rawCert = $cert.RawData
-            $mockCert = [X509Certificate2]::new($rawCert)
+            $cert = (New-CodeSigningCertificate -Project $TestProject) | Where-Object { $_ -is [System.Security.Cryptography.X509Certificates.X509Certificate2] } | Select-Object -First 1
+            
+            # Create a new certificate without EKU
             $badCert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
             { Add-CertificateToTrustedStore -Certificate $badCert } | Should Throw "Code Signing Enhanced Key Usage"
         }
