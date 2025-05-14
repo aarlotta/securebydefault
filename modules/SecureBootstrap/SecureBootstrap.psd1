@@ -10,7 +10,8 @@
     FunctionsToExport = @(
         "New-CodeSigningCertificate",
         "Sign-Scripts",
-        "Write-CursorPromptLog"
+        "Write-CursorPromptLog",
+        "Add-CertificateToTrustedStore"
     )
     CmdletsToExport = @()
     VariablesToExport = @()
