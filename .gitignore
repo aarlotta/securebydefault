@@ -1,5 +1,10 @@
-# Ignore exported certs
-certs/*.pfx
+# Ignore IDE and editor files
+.vscode/
+*.log
+*.zip
+*.tmp
+*.bak
+*.DS_Store
 
 # PowerShell module files
 *.psm1
@@ -9,15 +14,7 @@ certs/*.pfx
 # Test results
 TestResults/
 
-# VS Code
-.vscode/
-
 # Windows
 Thumbs.db
 ehthumbs.db
 Desktop.ini
-*.log
-*.zip
-*.tmp
-*.bak
-*.DS_Store

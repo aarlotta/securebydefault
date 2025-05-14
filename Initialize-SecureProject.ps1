@@ -1,9 +1,9 @@
 # Initialize-SecureProject.ps1
-# Script to initialize the Secure PowerShell Module project structure
+# Script to initialize the PowerShell Module project structure
 
 <#
 .SYNOPSIS
-    Initializes a secure PowerShell module project structure with Git repository and required directories.
+    Initializes a PowerShell module project structure with Git repository and required directories.
 .DESCRIPTION
     Creates a standardized project structure for PowerShell module development, including Git initialization,
     directory structure, and configuration files. The script is idempotent and can be run multiple times
@@ -23,20 +23,11 @@ param(
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
-# Check execution policy and provide guidance if needed
-$currentPolicy = Get-ExecutionPolicy
-if ($currentPolicy -eq 'Restricted') {
-    Write-Warning "PowerShell execution policy is currently set to 'Restricted'"
-    Write-Information "To run this script, you need to change the execution policy. You have two options:"
-    Write-Information "`nOption 1 - Temporary (Recommended for this script):"
-    Write-Information "    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass"
-    Write-Information "    Then run this script again."
-    Write-Information "`nOption 2 - Permanent (Requires Administrator privileges):"
-    Write-Information "    Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned"
-    Write-Information "    Then run this script again."
-    Write-Information "`nFor more information, visit: https://go.microsoft.com/fwlink/?LinkID=135170"
-    exit 1
-}
+# TODO: Future security enhancements could include:
+# - Execution policy management
+# - Code signing with trusted certificates
+# - Certificate-based script validation
+# - Secure bootstrapping with certificate trust chains
 
 # Function to check if Git is initialized
 function Test-GitInitialized {
@@ -118,13 +109,13 @@ function New-InitialCommit {
 
     if ($PSCmdlet.ShouldProcess("Git repository", "Create initial commit")) {
         git add .
-        git commit -m "chore(init): initialize secure project structure and git metadata"
+        git commit -m "chore(init): initialize project structure and git metadata"
         Write-Verbose "Created initial commit"
     }
 }
 
 # Main script execution
-Write-Verbose "Initializing Secure PowerShell Module project structure..."
+Write-Verbose "Initializing PowerShell Module project structure..."
 
 # Handle Git initialization
 if (Test-GitInitialized) {
@@ -150,8 +141,7 @@ if (Test-GitInitialized) {
 # Create required directories
 $directories = @(
     "modules/SecureBootstrap",
-    "tests",
-    "certs"
+    "tests"
 )
 
 foreach ($dir in $directories) {
@@ -165,7 +155,6 @@ New-FileIfMissing -Path "cursor_prompt.log"
 $gitignorePath = ".gitignore"
 $gitignoreContent = @"
 .vscode/
-certs/*.pfx
 *.log
 *.zip
 *.tmp
@@ -194,4 +183,4 @@ if (-not (git rev-parse --verify HEAD 2>$null)) {
     New-InitialCommit
 }
 
-Write-Verbose "Secure project structure initialized. Ready for module development."
+Write-Verbose "Project structure initialized. Ready for module development."

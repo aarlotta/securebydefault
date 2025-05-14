@@ -2,6 +2,10 @@
 
 # <type>(<scope>): <short summary>
 #
+# Types: chore, feat, fix, docs, test, refactor, ci, perf
+# Scope: module, script, init, git, ci, doc, etc.
+# Example: feat(module): add new logging function
+#
 # Commit types:
 #   feat     = new feature
 #   fix      = bug fix or issue resolution
