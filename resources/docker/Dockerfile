@@ -18,7 +18,7 @@ RUN apk add --no-cache \
     jq
 
 # Add validation script
-COPY modules/SecureBootstrap/resources/docker/tests/test_uid.sh /app/tests/
+COPY resources/docker/tests/test_uid.sh /app/tests/
 RUN chmod +x /app/tests/test_uid.sh
 
 # Run basic validation

@@ -1,17 +1,14 @@
-# SecureByDefault Docker Resources
+# Docker Environment
 
-This directory contains Docker-related resources for the SecureByDefault project.
+This folder contains all Docker-related assets for the SecureByDefault project.
 
-## Dockerfile
+## Structure
 
-The `Dockerfile` provides a minimal Alpine-based container for running basic validation tests. It is designed to be lightweight and secure, without any PowerShell dependencies.
+- `Dockerfile` – The main build definition
+- `app/` – Optional build context (left empty by default)
+- `tests/` – Optional test scripts
 
-### Features
-
-- Uses Alpine Linux as the base image
-- Includes essential tools for validation (bash, curl, grep, jq)
-- Runs basic UID/GID validation tests
-- Sets CI environment for non-interactive operation
+## Usage
 
 ### Building the Image
 
@@ -27,25 +24,9 @@ docker build -t securebydefault/base -f resources/docker/Dockerfile .
 docker run --rm securebydefault/base
 ```
 
-## Directory Structure
+## Design Principles
 
-```
-resources/docker/
-├── Dockerfile          # Main Docker build file
-├── app/               # Application-specific files (if needed)
-└── tests/             # Test scripts
-    └── test_uid.sh    # UID/GID validation script
-```
-
-## Best Practices
-
-1. Keep the image minimal and focused
-2. Use shell scripts for validation when possible
-3. Avoid installing unnecessary packages
-4. Follow security best practices for container builds
-
-## Notes
-
-- The container is designed for basic validation only
-- PowerShell tests are run outside the container
-- The image is intentionally minimal to reduce attack surface 
+1. **Minimal Base**: Uses Alpine Linux for a small attack surface
+2. **No PowerShell**: Container is designed for basic validation only
+3. **Clear Structure**: All Docker assets are centralized here
+4. **Security First**: Follows container security best practices 
