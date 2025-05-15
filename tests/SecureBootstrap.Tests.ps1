@@ -16,10 +16,10 @@ BeforeAll {
 }
 
 # Resolve module path using PSScriptRoot
-$modulePath = Resolve-Path "$PSScriptRoot\..\..\modules\SecureBootstrap\SecureBootstrap.psd1" -ErrorAction SilentlyContinue
+$modulePath = Resolve-Path "$PSScriptRoot\..\modules\SecureBootstrap\SecureBootstrap.psd1" -ErrorAction SilentlyContinue
 
 if (-not $modulePath) {
-    throw "❌ Could not resolve module path for SecureBootstrap at expected location: $PSScriptRoot\..\..\modules\SecureBootstrap"
+    throw "❌ Could not resolve module path for SecureBootstrap at expected location: $PSScriptRoot\..\modules\SecureBootstrap"
 }
 
 # Import module once with error handling
@@ -56,6 +56,7 @@ Describe "SecureBootstrap Module" {
 if ($env:GITHUB_ACTIONS -eq "true" -or $env:CI -eq "true" -or $Host.UI.RawUI.WindowTitle -like "*CI*") {
     # do nothing, skip Read-Host
 }
+
 
 
 

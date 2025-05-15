@@ -1227,3 +1227,57 @@
 # 2025-05-14 22:02:00Z [SBD] [+] Successfully built Docker image: securebydefault/base
 # 2025-05-14 22:02:01Z [SBD] [+] Tests completed successfully
 # 2025-05-14 22:02:01Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:04:12Z [SBD] [i] Skipping PowerShell installation (requires -Force and not -CleanUp)
+# 2025-05-14 22:04:12Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:04:12Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:04:12Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:04:12Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:04:12Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:04:12Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:04:12Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:04:12Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:04:15Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:04:16Z [SBD] [+] Docker system pruned successfully
+# 2025-05-14 22:04:16Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:04:19Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:04:19Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:04:19Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:04:19Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:04:19Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:04:19Z [SBD] [!] Force flag detected, but .git will NOT be deleted to preserve history
+# 2025-05-14 22:04:19Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:04:19Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:04:19Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:04:19Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:04:21Z [SBD] [i] Skipping PowerShell installation (requires -Force and not -CleanUp)
+# 2025-05-14 22:04:21Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:04:21Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:04:21Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:04:21Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:04:21Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:04:21Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:04:21Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:04:21Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:04:21Z [SBD] [+] Docker environment folder removed: resources/docker
+# 2025-05-14 22:04:21Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:04:25Z [SBD] [i] Skipping PowerShell installation (requires -Force and not -CleanUp)
+# 2025-05-14 22:04:25Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:04:25Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:04:25Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:04:25Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:04:26Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:04:26Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:04:26Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:04:26Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:04:26Z [SBD] [i] Running environment validation tests...
+# 2025-05-14 22:04:26Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:04:26Z [SBD] [i] Running Pester tests...
+# 2025-05-14 22:04:26Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:04:26Z [SBD] [+] Pester tests completed successfully
+# 2025-05-14 22:04:26Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:04:27Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:04:27Z [SBD] [+] Created Docker environment directory: resources/docker
+# 2025-05-14 22:04:27Z [SBD] [+] Created Dockerfile at: resources\docker\Dockerfile
+# 2025-05-14 22:04:28Z [SBD] [+] Successfully built Docker image: securebydefault/base
+# 2025-05-14 22:04:29Z [SBD] [+] Tests completed successfully
+# 2025-05-14 22:04:29Z [SBD] [+] Project structure initialized. Ready for module development
