@@ -1,3 +1,11 @@
+BeforeAll {
+    $requiredVersion = [Version]'5.5.0'
+    $pesterVersion = (Get-Module -ListAvailable -Name Pester | Sort-Object Version -Descending | Select-Object -First 1).Version
+    if ($pesterVersion -lt $requiredVersion) {
+        throw "❌ Pester version $($requiredVersion) or higher is required. Current: $($pesterVersion)"
+    }
+}
+
 Describe "Write-CursorPromptLog" {
     BeforeAll {
         $scriptPath = Join-Path $PSScriptRoot "../../modules/SecureBootstrap/Private/Write-CursorPromptLog.ps1"
