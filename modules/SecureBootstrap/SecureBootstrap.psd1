@@ -13,7 +13,8 @@
         "Set-Utf8Encoding",
         "Write-SbdLog",
         "Write-InternalLog",
-        "Test-DockerReady"
+        "Test-DockerReady",
+        "Invoke-PesterSafe"
     )
     CmdletsToExport = @()
     VariablesToExport = @()
