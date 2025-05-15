@@ -27,6 +27,8 @@ Describe "SecureBootstrap Module" {
     }
 }
 
-# Keep console window open after tests complete
-Write-Host "`nPress any key to continue..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") 
+# Only show interactive prompt in non-CI environments
+if (-not $env:GITHUB_ACTIONS -and $Host.Name -notmatch 'VSCode|Visual Studio') {
+    Write-Host "`nPress Enter to continue..."
+    Read-Host
+} 

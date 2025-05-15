@@ -276,8 +276,8 @@ if ($BuildDocker -or $Rebuild) {
         $pwshCommand = Get-Command pwsh -ErrorAction SilentlyContinue
         $pwshCmd = if ($pwshCommand) { $pwshCommand.Source } else { "powershell.exe" }
 
-        # Safely invoke:
-        Start-Process -FilePath $pwshCmd -ArgumentList "-File `"$runTestsPath`"" -NoNewWindow -Wait
+        # Safely invoke with proper argument parsing
+        Start-Process -FilePath $pwshCmd -ArgumentList "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "`"$runTestsPath`"" -Wait
     } else {
         Write-SbdLog -Message "Skipping tests: Run-Tests.ps1 not found in module Private folder" -Level Warning
     }
