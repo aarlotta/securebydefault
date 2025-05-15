@@ -17,6 +17,4 @@ function Write-CursorPromptLog {
 
     Add-Content -Path $LogPath -Value $entry
     Write-Verbose "[SBD] Logged cursor prompt: $Message"
-}
-
-Export-ModuleMember -Function Write-CursorPromptLog 
+} 
