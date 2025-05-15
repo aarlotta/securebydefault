@@ -16,10 +16,14 @@ BeforeAll {
 }
 
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$modulePath = Join-Path $here '../../modules/SecureBootstrap/SecureBootstrap.psd1'
+$modulePath = Resolve-Path "$here/../../modules/SecureBootstrap/SecureBootstrap.psd1"
+
+# Use a relative fallback if not in CI
 if (-not (Test-Path $modulePath)) {
-    throw "Module manifest not found at: $modulePath"
+    $modulePath = "E:\securebydefault\modules\SecureBootstrap\SecureBootstrap.psd1"
 }
+
+Import-Module $modulePath -Force -ErrorAction Stop
 
 Describe "SecureBootstrap Module" {
     Context "Module Loading" {
@@ -48,7 +52,6 @@ Describe "SecureBootstrap Module" {
 }
 
 # Only show interactive prompt in non-CI environments
-if (-not $env:GITHUB_ACTIONS -and $Host.Name -notmatch 'VSCode|Visual Studio') {
-    Write-Host "`nPress Enter to continue..."
-    Read-Host
+if ($env:GITHUB_ACTIONS -ne "true" -and $Host.UI.RawUI.WindowTitle -notlike "*CI*") {
+    # do nothing, skip Read-Host
 } 

@@ -166,3 +166,32 @@
 # 2025-05-14 21:05:36Z [SBD] [v] Global Git commit template already configured
 # 2025-05-14 21:05:36Z [SBD] [+] Docker environment folder removed: resources/docker
 # 2025-05-14 21:05:36Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:06:53Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:06:53Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:06:53Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:06:53Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:06:53Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:06:53Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:06:53Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:06:53Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:06:53Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:06:53Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:07:00Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:07:00Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:07:00Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:07:00Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:07:00Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:07:00Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:07:00Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:07:00Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:07:00Z [SBD] [i] Running environment validation tests...
+# 2025-05-14 21:07:00Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:07:00Z [SBD] [i] Running Pester tests...
+# 2025-05-14 21:07:06Z [SBD] [+] Pester tests completed successfully
+# 2025-05-14 21:07:09Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 21:07:09Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 21:07:09Z [SBD] [+] Created Docker environment directory: resources/docker
+# 2025-05-14 21:07:09Z [SBD] [+] Created Dockerfile at: resources\docker\Dockerfile
+# 2025-05-14 21:07:10Z [SBD] [+] Successfully built Docker image: securebydefault/base
+# 2025-05-14 21:07:11Z [SBD] [+] Tests completed successfully
+# 2025-05-14 21:07:11Z [SBD] [+] Project structure initialized. Ready for module development
