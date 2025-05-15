@@ -249,6 +249,17 @@ if ($PruneDocker) {
     }
 }
 
+# Run tests after Docker build or rebuild
+if ($BuildDocker -or $Rebuild) {
+    $runTestsPath = Join-Path $PSScriptRoot "tests/Private/Run-Tests.ps1"
+    if (Test-Path $runTestsPath) {
+        Write-Information -MessageData "[SBD] ▶️ Running environment validation tests..." -InformationAction Continue
+        pwsh -File $runTestsPath
+    } else {
+        Write-Warning "[SBD] Skipping tests: Run-Tests.ps1 not found."
+    }
+}
+
 # Build or Rebuild Docker environment
 if ($BuildDocker -or $Rebuild) {
     $dockerParams = @{
