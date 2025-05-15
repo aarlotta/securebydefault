@@ -21,7 +21,4 @@ Export-ModuleMember -Function @(
     "Write-SbdLog",
     "Test-DockerReady",
     "Invoke-PesterSafe"
-)
-
-# Explicitly mark private functions
-Export-ModuleMember -Function "Write-InternalLog" -Scope Private 
+) 
