@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-    Installs the latest stable PowerShell 7.x using winget for all users (machine scope).
+    Installs PowerShell 7.4.1 from GitHub release ZIP for all users (machine scope).
 #>
 
 [CmdletBinding()]
@@ -36,39 +36,53 @@ function Get-PwshVersion {
     }
 }
 
-$pesterVersion = Get-PwshVersion
+$pwshVersion = Get-PwshVersion
 
-if ($Force -or -not $pesterVersion -or [version]$pesterVersion -lt [version]'7.0.0') {
-    Write-Host "[SBD] 🔍 Installing PowerShell 7.x using winget..." -ForegroundColor Yellow
+if ($Force -or -not $pwshVersion -or [version]$pwshVersion -lt [version]'7.0.0') {
+    Write-Host "[SBD] 🔍 Installing PowerShell 7.4.1 from GitHub..." -ForegroundColor Yellow
 
-    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-        Write-Error "[SBD] ❌ Winget is not available. Install winget or run manually."
+    # Define paths and URLs
+    $installDir = "C:\Program Files\PowerShell\7"
+    $zipPath = Join-Path $env:TEMP "PowerShell-7.4.1-win-x64.zip"
+    $downloadUrl = "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.zip"
+
+    try {
+        # Create installation directory if it doesn't exist
+        if (-not (Test-Path $installDir)) {
+            New-Item -Path $installDir -ItemType Directory -Force | Out-Null
+        }
+
+        # Download PowerShell ZIP
+        Write-Host "[SBD] 📥 Downloading PowerShell 7.4.1..."
+        Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath
+
+        # Extract ZIP to installation directory
+        Write-Host "[SBD] 📦 Extracting PowerShell 7.4.1..."
+        Expand-Archive -Path $zipPath -DestinationPath $installDir -Force
+
+        # Add to PATH if not already present
+        $currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+        if (-not $currentPath.Contains($installDir)) {
+            $newPath = $currentPath + ";" + $installDir
+            [Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine")
+        }
+
+        # Clean up
+        Remove-Item -Path $zipPath -Force
+
+        Write-Host "[SBD] ✅ PowerShell 7.4.1 installed successfully." -ForegroundColor Green
+    } catch {
+        Write-Error "[SBD] ❌ Failed to install PowerShell 7.4.1: $_"
+        if (Test-Path $zipPath) {
+            Remove-Item -Path $zipPath -Force
+        }
         return
     }
-
-    # Use full path to winget and proper argument formatting
-    $wingetPath = (Get-Command winget).Source
-    $arguments = @(
-        'install',
-        '--id', 'Microsoft.Powershell',
-        '--source', 'winget',
-        '--scope', 'machine',
-        '--accept-package-agreements',
-        '--accept-source-agreements',
-        '--silent'
-    )
-
-    Start-Process -FilePath $wingetPath -ArgumentList $arguments -Wait -NoNewWindow
-
-    if ($LASTEXITCODE -ne 0) {
-        Write-Warning "[SBD] ⚠️ Winget exited with a non-zero code. This may be caused by outdated or broken sources."
-        Write-Warning "[SBD] 🛠️ Try running: winget source reset --force"
-    } else {
-        Write-Host "[SBD] ✅ PowerShell 7 installed system-wide." -ForegroundColor Green
-    }
 } else {
-    Write-Host "[SBD] ✅ PowerShell 7 already installed: v$pesterVersion" -ForegroundColor Green
+    Write-Host "[SBD] ✅ PowerShell 7 already installed: v$pwshVersion" -ForegroundColor Green
 }
+
 
 
 
