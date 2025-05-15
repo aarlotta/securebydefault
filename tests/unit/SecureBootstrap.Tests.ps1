@@ -11,21 +11,15 @@ BeforeAll {
     $requiredVersion = [Version]'5.5.0'
     $pesterVersion = (Get-Module -ListAvailable -Name Pester | Sort-Object Version -Descending | Select-Object -First 1).Version
     if ($pesterVersion -lt $requiredVersion) {
-        throw "âŒ Pester version $($requiredVersion) or higher is required. Current: $($pesterVersion)"
+        throw "❌ Pester version $($requiredVersion) or higher is required. Current: $($pesterVersion)"
     }
 }
 
-# Resolve module path using $MyInvocation for reliable path resolution
-$here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$modulePath = Join-Path $here "../../modules/SecureBootstrap/SecureBootstrap.psd1"
+# Resolve module path using PSScriptRoot
+$modulePath = Resolve-Path "$PSScriptRoot\..\..\modules\SecureBootstrap\SecureBootstrap.psd1" -ErrorAction SilentlyContinue
 
-# Try to resolve the module path with fallbacks
-if (Test-Path $modulePath) {
-    $modulePath = Resolve-Path $modulePath
-} elseif (Test-Path "E:\securebydefault\modules\SecureBootstrap\SecureBootstrap.psd1") {
-    $modulePath = "E:\securebydefault\modules\SecureBootstrap\SecureBootstrap.psd1"
-} else {
-    throw "Module manifest not found. Searched in: $modulePath and E:\securebydefault\modules\SecureBootstrap\SecureBootstrap.psd1"
+if (-not $modulePath) {
+    throw "❌ Could not resolve module path for SecureBootstrap at expected location: $PSScriptRoot\..\..\modules\SecureBootstrap"
 }
 
 # Import module once with error handling
@@ -62,6 +56,7 @@ Describe "SecureBootstrap Module" {
 if ($env:GITHUB_ACTIONS -eq "true" -or $env:CI -eq "true" -or $Host.UI.RawUI.WindowTitle -like "*CI*") {
     # do nothing, skip Read-Host
 }
+
 
 
 
