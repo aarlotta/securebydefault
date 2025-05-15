@@ -12,7 +12,6 @@ function Import-Script {
     param (
         [string]$ScriptPath
     )
-
     if (Test-Path $ScriptPath) {
         . $ScriptPath
     } else {
@@ -20,16 +19,14 @@ function Import-Script {
     }
 }
 
-# First load helpers since other scripts depend on them
+# Dot-source all scripts (order matters: helpers first)
 Import-Script "$PSScriptRoot/Private/Helpers.ps1"
-
-# Then load the rest of the scripts
 Import-Script "$PSScriptRoot/Public/Write-CursorPromptLog.ps1"
 Import-Script "$PSScriptRoot/Public/New-SecureDockerEnvironment.ps1"
 Import-Script "$PSScriptRoot/Private/Install-Pester.ps1"
 Import-Script "$PSScriptRoot/Private/Run-Tests.ps1"
 
-# Export public functions
+# Export only public functions that exist
 Export-ModuleMember -Function @(
     "Write-CursorPromptLog",
     "New-SecureDockerEnvironment",
@@ -39,6 +36,7 @@ Export-ModuleMember -Function @(
     "Invoke-PesterSafe",
     "Run-Tests"
 )
+
 
 
 
