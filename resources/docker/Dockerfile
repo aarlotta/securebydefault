@@ -1,4 +1,5 @@
-﻿FROM mcr.microsoft.com/powershell:latest
+﻿# Use minimal Alpine base image
+FROM alpine:latest
 
 # Set working directory
 WORKDIR /app
@@ -6,8 +7,19 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Install dependencies
-RUN pwsh -Command "Install-Module -Name Pester -Force -Scope AllUsers"
+# Set environment variables
+ENV CI=true
 
-# Set entrypoint
-ENTRYPOINT ["pwsh"]
+# Install basic tools for validation
+RUN apk add --no-cache \
+    bash \
+    curl \
+    grep \
+    jq
+
+# Add validation script
+COPY modules/SecureBootstrap/resources/docker/tests/test_uid.sh /app/tests/
+RUN chmod +x /app/tests/test_uid.sh
+
+# Run basic validation
+CMD ["/bin/bash", "-c", "/app/tests/test_uid.sh"]
