@@ -42,3 +42,39 @@
 # 2025-05-14 20:43:35Z [SBD] [+] Successfully built Docker image: securebydefault/base
 # 2025-05-14 20:43:36Z [SBD] [+] Tests completed successfully
 # 2025-05-14 20:43:36Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 20:46:18Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 20:46:18Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 20:46:18Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 20:46:18Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 20:46:18Z [SBD] [+] Project structure initialized
+# 2025-05-14 20:46:18Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 20:46:18Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 20:46:18Z [SBD] [+] Docker environment folder removed: resources/docker
+# 2025-05-14 20:46:18Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 20:47:04Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 20:47:04Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 20:47:04Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 20:47:04Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 20:47:04Z [SBD] [+] Project structure initialized
+# 2025-05-14 20:47:04Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 20:47:04Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 20:47:04Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 20:47:04Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 20:47:18Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 20:47:18Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 20:47:18Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 20:47:18Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 20:47:18Z [SBD] [+] Project structure initialized
+# 2025-05-14 20:47:18Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 20:47:18Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 20:47:18Z [SBD] [i] Running environment validation tests...
+# 2025-05-14 20:47:19Z [SBD] [i] Running Pester tests...
+# 2025-05-14 20:47:20Z [SBD] [v] Using Pester 4 compatibility mode
+# 2025-05-14 20:47:25Z [SBD] [+] Pester tests completed successfully
+# 2025-05-14 20:47:28Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 20:47:28Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 20:47:28Z [SBD] [+] Created Docker environment directory: resources/docker
+# 2025-05-14 20:47:28Z [SBD] [+] Created Dockerfile at: resources\docker\Dockerfile
+# 2025-05-14 20:47:30Z [SBD] [+] Successfully built Docker image: securebydefault/base
+# 2025-05-14 20:47:31Z [SBD] [+] Tests completed successfully
+# 2025-05-14 20:47:31Z [SBD] [+] Project structure initialized. Ready for module development

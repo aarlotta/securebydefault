@@ -7,10 +7,8 @@
 # - Trust store management tests
 # - Execution policy tests
 
-Write-Host '--- DEBUG: Test file started ---'
-# Pester 3.4.0 compatible tests
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$modulePath = Resolve-Path (Join-Path $here '..\modules\SecureBootstrap\SecureBootstrap.psd1')
+$modulePath = Resolve-Path (Join-Path $here '../../modules/SecureBootstrap/SecureBootstrap.psd1')
 
 Describe "SecureBootstrap Module" {
     Context "Module Loading" {

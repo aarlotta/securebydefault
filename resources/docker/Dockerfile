@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
-RUN pwsh -Command "Install-Module -Name Pester -Force -Scope AllUsers"
+RUN pwsh -Command "Install-Module -Name Pester -Force -Scope AllUsers -MinimumVersion 5.5.0"
 
 # Set entrypoint
 ENTRYPOINT ["pwsh"]
