@@ -315,3 +315,15 @@
 # 2025-05-14 21:15:30Z [SBD] [v] Global Git commit template already configured
 # 2025-05-14 21:15:30Z [SBD] [!] Docker environment folder not found (already clean)
 # 2025-05-14 21:15:30Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:17:12Z [SBD] [i] Skipping PowerShell installation during CleanUp
+# 2025-05-14 21:17:12Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:17:12Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:17:12Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:17:12Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:17:12Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:17:12Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:17:12Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:17:13Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:17:13Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:17:13Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:17:13Z [SBD] [i] 🔍 Run 'Invoke-ScriptAnalyzer -Path . -Recurse' to check for whitespace and linting issues.

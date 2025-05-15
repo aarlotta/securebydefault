@@ -338,6 +338,3 @@ if ($BuildDocker -or $Rebuild) {
 }
 
 Write-SbdLog -Message "Project structure initialized. Ready for module development" -Level Success
-
-# Suggest running PSScriptAnalyzer for code quality
-Write-SbdLog -Message "🔍 Run 'Invoke-ScriptAnalyzer -Path . -Recurse' to check for whitespace and linting issues." -Level Info
