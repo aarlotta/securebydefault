@@ -526,3 +526,111 @@
 # 2025-05-14 21:35:58Z [SBD] [v] Global Git commit template already configured
 # 2025-05-14 21:35:58Z [SBD] [!] Docker environment folder not found (already clean)
 # 2025-05-14 21:35:58Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:38:20Z [SBD] [i] Skipping PowerShell installation during CleanUp
+# 2025-05-14 21:38:21Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:21Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:38:21Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:38:21Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:38:21Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:38:21Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:38:21Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:38:21Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:38:21Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:38:21Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:38:22Z [SBD] [i] Skipping PowerShell installation during CleanUp
+# 2025-05-14 21:38:22Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:22Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:38:22Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:38:22Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:38:23Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:38:23Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:38:23Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:38:23Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:38:23Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:38:23Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:38:23Z [SBD] [i] Skipping PowerShell installation during CleanUp
+# 2025-05-14 21:38:23Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:23Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:38:23Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:38:23Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:38:23Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:38:23Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:38:23Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:38:23Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:38:23Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:38:23Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:38:24Z [SBD] [i] Skipping PowerShell installation during CleanUp
+# 2025-05-14 21:38:24Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:24Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:38:24Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:38:24Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:38:24Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:38:24Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:38:24Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:38:24Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:38:24Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:38:24Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:38:24Z [SBD] [i] Skipping PowerShell installation during CleanUp
+# 2025-05-14 21:38:25Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:25Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:38:25Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:38:25Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:38:25Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:38:25Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:38:25Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:38:25Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:38:25Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:38:25Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:38:25Z [SBD] [i] Skipping PowerShell installation during CleanUp
+# 2025-05-14 21:38:25Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:25Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:38:25Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:38:25Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:38:25Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:38:25Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:38:25Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:38:25Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:38:25Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:38:25Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:38:26Z [SBD] [i] Skipping PowerShell installation during CleanUp
+# 2025-05-14 21:38:26Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:26Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:38:26Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:38:26Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:38:26Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:38:26Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:38:26Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:38:26Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:38:26Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:38:26Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:38:26Z [SBD] [i] Skipping PowerShell installation during CleanUp
+# 2025-05-14 21:38:26Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:26Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:38:26Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:38:26Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:38:26Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:38:26Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:38:26Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:38:26Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:38:26Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:38:26Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:38:38Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:38Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:38:38Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:38:38Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:38:38Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:38:38Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:38:38Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:38:38Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:38:38Z [SBD] [i] Running environment validation tests...
+# 2025-05-14 21:38:38Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:38Z [SBD] [i] Running Pester tests...
+# 2025-05-14 21:38:39Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:38:39Z [SBD] [+] Pester tests completed successfully
+# 2025-05-14 21:38:42Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 21:38:42Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 21:38:42Z [SBD] [+] Created Docker environment directory: resources/docker
+# 2025-05-14 21:38:42Z [SBD] [+] Created Dockerfile at: resources\docker\Dockerfile
+# 2025-05-14 21:38:43Z [SBD] [+] Successfully built Docker image: securebydefault/base
+# 2025-05-14 21:38:44Z [SBD] [+] Tests completed successfully
+# 2025-05-14 21:38:44Z [SBD] [+] Project structure initialized. Ready for module development
