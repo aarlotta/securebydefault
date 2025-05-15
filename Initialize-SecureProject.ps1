@@ -274,8 +274,17 @@ if ($BuildDocker -or $Rebuild) {
     if (Test-Path $runTestsPath) {
         Write-SbdLog -Message "Running environment validation tests..." -Level Info
         
-        # Ensure Pester 5.5.0+ is installed
-        . "$PSScriptRoot\modules\SecureBootstrap\Private\Install-Pester.ps1" -AllUsers
+        # Skip Pester installation during cleanup
+        if (-not $CleanUp) {
+            $pesterInstaller = Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Install-Pester.ps1"
+            if (Test-Path $pesterInstaller) {
+                . $pesterInstaller -AllUsers
+            } else {
+                Write-SbdLog -Message "Install-Pester.ps1 not found at: $pesterInstaller" -Level Warning
+            }
+        } else {
+            Write-SbdLog -Message "Skipping Pester installation during CleanUp" -Level Info
+        }
         
         # Run tests using the safe runner
         Invoke-PesterSafe -Path "./tests"
