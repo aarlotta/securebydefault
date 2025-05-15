@@ -323,8 +323,3 @@ if ($BuildDocker -or $Rebuild) {
 }
 
 Write-SbdLog -Message "Project structure initialized. Ready for module development" -Level Success
-
-$pwshPath = (Get-Command pwsh -ErrorAction SilentlyContinue).Source
-if (-not $pwshPath) { $pwshPath = "powershell.exe" }
-
-Start-Process -FilePath $pwshPath -ArgumentList "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "`"$runTestsPath`"" -NoNewWindow -Wait

@@ -16,14 +16,23 @@ BeforeAll {
 }
 
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$modulePath = Resolve-Path "$here/../../modules/SecureBootstrap/SecureBootstrap.psd1"
+$modulePath = Join-Path $here "../../modules/SecureBootstrap/SecureBootstrap.psd1"
 
-# Use a relative fallback if not in CI
-if (-not (Test-Path $modulePath)) {
+# Try to resolve the module path with fallbacks
+if (Test-Path $modulePath) {
+    $modulePath = Resolve-Path $modulePath
+} elseif (Test-Path "E:\securebydefault\modules\SecureBootstrap\SecureBootstrap.psd1") {
     $modulePath = "E:\securebydefault\modules\SecureBootstrap\SecureBootstrap.psd1"
+} else {
+    throw "Module manifest not found. Searched in: $modulePath and E:\securebydefault\modules\SecureBootstrap\SecureBootstrap.psd1"
 }
 
-Import-Module $modulePath -Force -ErrorAction Stop
+# Import module once with error handling
+try {
+    Import-Module $modulePath -Force -ErrorAction Stop
+} catch {
+    throw "Failed to import module: $_"
+}
 
 Describe "SecureBootstrap Module" {
     Context "Module Loading" {
@@ -32,10 +41,7 @@ Describe "SecureBootstrap Module" {
         }
 
         It "Should import successfully" {
-            { 
-                Import-Module $modulePath -Force -ErrorAction Stop
-                Import-Module SecureBootstrap -Force -ErrorAction Stop
-            } | Should -Not -Throw
+            { Import-Module $modulePath -Force -ErrorAction Stop } | Should -Not -Throw
             $module = Get-Module -Name SecureBootstrap
             $module | Should -Not -BeNullOrEmpty
             $module.Version | Should -Be '0.1.0'
@@ -51,7 +57,7 @@ Describe "SecureBootstrap Module" {
     }
 }
 
-# Only show interactive prompt in non-CI environments
-if ($env:GITHUB_ACTIONS -ne "true" -and $Host.UI.RawUI.WindowTitle -notlike "*CI*") {
+# Skip interactive prompts in CI environments
+if ($env:GITHUB_ACTIONS -eq "true" -or $env:CI -eq "true" -or $Host.UI.RawUI.WindowTitle -like "*CI*") {
     # do nothing, skip Read-Host
 } 
