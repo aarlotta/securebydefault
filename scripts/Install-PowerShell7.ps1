@@ -59,10 +59,17 @@ if ($Force -or -not $pesterVersion -or [version]$pesterVersion -lt [version]'7.0
     )
 
     Start-Process -FilePath $wingetPath -ArgumentList $arguments -Wait -NoNewWindow
-    Write-Host "[SBD] ✅ PowerShell 7 installed system-wide." -ForegroundColor Green
+
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "[SBD] ⚠️ Winget exited with a non-zero code. This may be caused by outdated or broken sources."
+        Write-Warning "[SBD] 🛠️ Try running: winget source reset --force"
+    } else {
+        Write-Host "[SBD] ✅ PowerShell 7 installed system-wide." -ForegroundColor Green
+    }
 } else {
     Write-Host "[SBD] ✅ PowerShell 7 already installed: v$pesterVersion" -ForegroundColor Green
 }
+
 
 
 
