@@ -14,3 +14,4 @@
         OutputPath = "TestResults.xml"
     }
 }
+

@@ -20,3 +20,4 @@ Describe ".gitignore structure" {
         }
     }
 }
+

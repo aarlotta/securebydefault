@@ -62,3 +62,4 @@ Describe "SecureBootstrap Module" {
 if ($env:GITHUB_ACTIONS -eq "true" -or $env:CI -eq "true" -or $Host.UI.RawUI.WindowTitle -like "*CI*") {
     # do nothing, skip Read-Host
 }
+

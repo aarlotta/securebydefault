@@ -98,3 +98,4 @@ if ($fixedFiles -eq 0) {
     Write-Host "[SBD] âœ¨ Auto-fixed $fixedFiles file(s). Please review changes before commit." -ForegroundColor Yellow
 }
 exit 0
+

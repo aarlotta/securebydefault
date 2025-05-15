@@ -10,3 +10,4 @@ Describe "Secure Docker Environment" {
         docker image inspect securebydefault/base -f "{{.Id}}" | Should -Not -BeNullOrEmpty
     }
 }
+

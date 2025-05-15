@@ -25,3 +25,4 @@
         Write-Error "Failed to write to log file: $($_.Exception.Message)"
     }
 }
+
