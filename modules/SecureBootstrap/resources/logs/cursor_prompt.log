@@ -156,3 +156,13 @@
 # 2025-05-14 21:05:04Z [SBD] [i] Pester 5.7.1 already installed.
 # 2025-05-14 21:05:04Z [SBD] [i] Running Pester tests...
 # 2025-05-14 21:05:09Z [SBD] [+] Pester tests completed successfully
+# 2025-05-14 21:05:36Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:05:36Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:05:36Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:05:36Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:05:36Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:05:36Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:05:36Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:05:36Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:05:36Z [SBD] [+] Docker environment folder removed: resources/docker
+# 2025-05-14 21:05:36Z [SBD] [+] Project structure initialized. Ready for module development
