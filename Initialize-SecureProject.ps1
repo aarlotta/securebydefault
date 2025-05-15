@@ -38,6 +38,17 @@ param(
     [switch]$PruneDocker
 )
 
+# Check for PowerShell 7 and install if needed
+$installPwshScript = Join-Path $PSScriptRoot "scripts\Install-PowerShell7.ps1"
+if (Test-Path $installPwshScript) {
+    if (-not (Get-Command pwsh -ErrorAction SilentlyContinue)) {
+        Write-Host "🔍 PowerShell 7 not found. Installing..." -ForegroundColor Yellow
+        . $installPwshScript
+    }
+} else {
+    Write-Warning "Install-PowerShell7.ps1 not found at: $installPwshScript"
+}
+
 # Ensure helpers are available and encoding is set
 $modulePath = Join-Path $PSScriptRoot "modules\SecureBootstrap\SecureBootstrap.psd1"
 if (Test-Path $modulePath) {
