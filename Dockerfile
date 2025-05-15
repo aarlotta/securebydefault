@@ -10,5 +10,19 @@ COPY . .
 # Set environment variables
 ENV CI=true
 
+# Install basic tools for validation
+RUN apk add --no-cache \
+    bash \
+    curl \
+    grep \
+    jq
+
+# Add validation script
+COPY modules/SecureBootstrap/resources/docker/tests/test_uid.sh /app/tests/
+RUN chmod +x /app/tests/test_uid.sh
+
+# Run basic validation
+CMD ["/bin/bash", "-c", "/app/tests/test_uid.sh"]
+
 # No need for an entrypoint or command since we're not running PowerShell tests
 # The container can be used for other purposes or extended as needed 

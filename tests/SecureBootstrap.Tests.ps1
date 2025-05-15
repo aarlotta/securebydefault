@@ -7,9 +7,12 @@
 # - Trust store management tests
 # - Execution policy tests
 
-$here       = Split-Path -Parent $MyInvocation.MyCommand.Path
-$projectDir = Resolve-Path "$here\.." | Select-Object -ExpandProperty Path
-$modulePath = Join-Path $projectDir 'modules\SecureBootstrap\SecureBootstrap.psd1'
+# Robust module path resolution
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
+$modulePath = Join-Path (Split-Path -Parent $here) "modules\SecureBootstrap\SecureBootstrap.psd1"
+$modulePath = [System.IO.Path]::GetFullPath($modulePath)
+
+Write-Verbose "Resolved module path: $modulePath"
 
 if (-not (Test-Path $modulePath)) {
     throw "❌ Could not resolve SecureBootstrap module path. Expected at: $modulePath"
@@ -56,6 +59,7 @@ Describe "SecureBootstrap Module" {
 if ($env:GITHUB_ACTIONS -eq "true" -or $env:CI -eq "true" -or $Host.UI.RawUI.WindowTitle -like "*CI*") {
     # do nothing, skip Read-Host
 }
+
 
 
 
