@@ -79,4 +79,26 @@ function Test-DockerReady {
         Write-SbdLog -Message "Docker is installed but not running. Please start Docker Desktop or the Docker daemon." -Level Error
         return $false
     }
+}
+
+# [2025-05-14] feat(pester): add safe Pester test runner with version compatibility
+function Invoke-PesterSafe {
+    [CmdletBinding()]
+    param (
+        [string]$Path = "./tests"
+    )
+
+    Write-SbdLog -Message "Running Pester tests..." -Level Info
+    try {
+        if (Get-Module -ListAvailable -Name Pester | Where-Object { $_.Version -ge '5.5.0' }) {
+            Invoke-Pester -Script $Path
+        } else {
+            Write-SbdLog -Message "Old Pester version found. Falling back to basic run..." -Level Warning
+            Invoke-Pester $Path
+        }
+        Write-SbdLog -Message "Pester tests completed successfully" -Level Success
+    } catch {
+        Write-SbdLog -Message "Pester test failure: $($_.Exception.Message)" -Level Error
+        throw
+    }
 } 

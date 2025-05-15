@@ -11,6 +11,7 @@
 . "$PSScriptRoot\Public\Write-CursorPromptLog.ps1"
 . "$PSScriptRoot\Public\New-SbdDockerEnvironment.ps1"
 . "$PSScriptRoot\Private\Helpers.ps1"
+. "$PSScriptRoot\Private\Install-Pester.ps1"
 
 # Export public functions
 Export-ModuleMember -Function @(
@@ -19,5 +20,6 @@ Export-ModuleMember -Function @(
     "Set-Utf8Encoding",
     "Write-SbdLog",
     "Write-InternalLog",
-    "Test-DockerReady"
+    "Test-DockerReady",
+    "Invoke-PesterSafe"
 ) 

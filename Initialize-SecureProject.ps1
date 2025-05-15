@@ -273,11 +273,12 @@ if ($BuildDocker -or $Rebuild) {
     $runTestsPath = Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Run-Tests.ps1"
     if (Test-Path $runTestsPath) {
         Write-SbdLog -Message "Running environment validation tests..." -Level Info
-        $pwshCommand = Get-Command pwsh -ErrorAction SilentlyContinue
-        $pwshCmd = if ($pwshCommand) { $pwshCommand.Source } else { "powershell.exe" }
-
-        # Safely invoke with proper argument parsing
-        Start-Process -FilePath $pwshCmd -ArgumentList "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "`"$runTestsPath`"" -Wait
+        
+        # Ensure Pester 5.5.0+ is installed
+        . "$PSScriptRoot\modules\SecureBootstrap\Private\Install-Pester.ps1" -AllUsers
+        
+        # Run tests using the safe runner
+        Invoke-PesterSafe -Path "./tests"
     } else {
         Write-SbdLog -Message "Skipping tests: Run-Tests.ps1 not found in module Private folder" -Level Warning
     }
