@@ -16,13 +16,25 @@ BeforeAll {
 }
 
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$modulePath = Resolve-Path (Join-Path $here '../../modules/SecureBootstrap/SecureBootstrap.psd1')
+$modulePath = Join-Path $here '../../modules/SecureBootstrap/SecureBootstrap.psd1'
+if (-not (Test-Path $modulePath)) {
+    throw "Module manifest not found at: $modulePath"
+}
 
 Describe "SecureBootstrap Module" {
     Context "Module Loading" {
+        BeforeAll {
+            Remove-Module -Name SecureBootstrap -Force -ErrorAction SilentlyContinue
+        }
+
         It "Should import successfully" {
-            Import-Module $modulePath -Force
-            Get-Module -Name SecureBootstrap | Should -Not -BeNullOrEmpty
+            { 
+                Import-Module $modulePath -Force -ErrorAction Stop
+                Import-Module SecureBootstrap -Force -ErrorAction Stop
+            } | Should -Not -Throw
+            $module = Get-Module -Name SecureBootstrap
+            $module | Should -Not -BeNullOrEmpty
+            $module.Version | Should -Be '0.1.0'
         }
 
         It "Should not export private functions" {

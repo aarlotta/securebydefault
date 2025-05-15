@@ -19,7 +19,9 @@ Export-ModuleMember -Function @(
     "New-SbdDockerEnvironment",
     "Set-Utf8Encoding",
     "Write-SbdLog",
-    "Write-InternalLog",
     "Test-DockerReady",
     "Invoke-PesterSafe"
-) 
+)
+
+# Explicitly mark private functions
+Export-ModuleMember -Function "Write-InternalLog" -Scope Private 

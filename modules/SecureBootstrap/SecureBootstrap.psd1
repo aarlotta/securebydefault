@@ -12,7 +12,6 @@
         "New-SbdDockerEnvironment",
         "Set-Utf8Encoding",
         "Write-SbdLog",
-        "Write-InternalLog",
         "Test-DockerReady",
         "Invoke-PesterSafe"
     )
