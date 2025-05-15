@@ -288,7 +288,7 @@ if ($BuildDocker -or $Rebuild) {
     $runTestsPath = Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Run-Tests.ps1"
     if (Test-Path $runTestsPath) {
         Write-SbdLog -Message "Running environment validation tests..." -Level Info
-        
+
         # Skip Pester installation during cleanup
         if (-not $CleanUp) {
             $pesterInstaller = Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Install-Pester.ps1"
@@ -300,7 +300,7 @@ if ($BuildDocker -or $Rebuild) {
         } else {
             Write-SbdLog -Message "Skipping Pester installation during CleanUp" -Level Info
         }
-        
+
         # Run tests using the safe runner
         Invoke-PesterSafe -Path "./tests"
     } else {

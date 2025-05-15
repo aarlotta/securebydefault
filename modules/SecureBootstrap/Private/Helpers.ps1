@@ -1,4 +1,4 @@
-# [2025-05-14] feat(helpers): add UTF-8 encoding enforcement and unified logging
+﻿# [2025-05-14] feat(helpers): add UTF-8 encoding enforcement and unified logging
 function Set-Utf8Encoding {
     [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
     $Global:OutputEncoding = [System.Text.Encoding]::UTF8
@@ -50,7 +50,7 @@ function Write-InternalLog {
         [Parameter(Mandatory = $true)]
         [string]$Message
     )
-    
+
     Write-Verbose "[internal]: $Message"
 }
 
@@ -101,4 +101,4 @@ function Invoke-PesterSafe {
         Write-SbdLog -Message "Pester test failure: $($_.Exception.Message)" -Level Error
         throw
     }
-} 
+}

@@ -1,4 +1,4 @@
-# Test-GitIgnore.ps1
+﻿# Test-GitIgnore.ps1
 # Validates that .gitignore contains all SecureByDefault-required entries
 
 $expectedEntries = @(
@@ -19,4 +19,4 @@ Describe ".gitignore structure" {
             }
         }
     }
-} 
+}

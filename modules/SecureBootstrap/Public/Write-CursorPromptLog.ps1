@@ -1,4 +1,4 @@
-function Write-CursorPromptLog {
+﻿function Write-CursorPromptLog {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
         [Parameter(Mandatory = $true)]
@@ -24,4 +24,4 @@ function Write-CursorPromptLog {
     catch {
         Write-Error "Failed to write to log file: $($_.Exception.Message)"
     }
-} 
+}

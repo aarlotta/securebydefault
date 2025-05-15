@@ -1,4 +1,4 @@
-# SecureBootstrap.Tests.ps1
+﻿# SecureBootstrap.Tests.ps1
 # Main test file for SecureBootstrap module
 
 # TODO: Future security enhancements could include:
@@ -11,7 +11,7 @@ BeforeAll {
     $requiredVersion = [Version]'5.5.0'
     $pesterVersion = (Get-Module -ListAvailable -Name Pester | Sort-Object Version -Descending | Select-Object -First 1).Version
     if ($pesterVersion -lt $requiredVersion) {
-        throw "❌ Pester version $($requiredVersion) or higher is required. Current: $($pesterVersion)"
+        throw "âŒ Pester version $($requiredVersion) or higher is required. Current: $($pesterVersion)"
     }
 }
 
@@ -61,4 +61,4 @@ Describe "SecureBootstrap Module" {
 # Skip interactive prompts in CI environments
 if ($env:GITHUB_ACTIONS -eq "true" -or $env:CI -eq "true" -or $Host.UI.RawUI.WindowTitle -like "*CI*") {
     # do nothing, skip Read-Host
-} 
+}

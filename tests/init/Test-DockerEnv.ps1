@@ -1,4 +1,4 @@
-# Test-DockerEnv.ps1
+﻿# Test-DockerEnv.ps1
 # Verifies that secure Docker image and structure exist
 
 Describe "Secure Docker Environment" {
@@ -9,4 +9,4 @@ Describe "Secure Docker Environment" {
     It "Docker image should be buildable" {
         docker image inspect securebydefault/base -f "{{.Id}}" | Should -Not -BeNullOrEmpty
     }
-} 
+}

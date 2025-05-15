@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Runs PSScriptAnalyzer with project settings and fails if errors are found.
 .DESCRIPTION
@@ -24,7 +24,7 @@ $issues = Invoke-ScriptAnalyzer -Path . -Recurse -Settings .\.psscriptanalyzer.p
 # Check for errors
 $errors = $issues.Where({ $_.Severity -eq 'Error' })
 if ($errors) {
-    Write-Error "❌ PSScriptAnalyzer found $($errors.Count) error(s). Please fix these issues before committing."
+    Write-Error "âŒ PSScriptAnalyzer found $($errors.Count) error(s). Please fix these issues before committing."
     $issues | Format-Table -AutoSize
     exit 1
 }
@@ -32,8 +32,8 @@ if ($errors) {
 # Show warnings if any
 $warnings = $issues.Where({ $_.Severity -eq 'Warning' })
 if ($warnings) {
-    Write-Warning "⚠️ PSScriptAnalyzer found $($warnings.Count) warning(s)."
+    Write-Warning "âš ï¸ PSScriptAnalyzer found $($warnings.Count) warning(s)."
     $warnings | Format-Table -AutoSize
 }
 
-Write-Host "✅ Code quality check passed." -ForegroundColor Green 
+Write-Host "âœ… Code quality check passed." -ForegroundColor Green

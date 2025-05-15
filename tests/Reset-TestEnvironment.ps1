@@ -1,4 +1,4 @@
-# Reset-TestEnvironment.ps1
+﻿# Reset-TestEnvironment.ps1
 # Resets the test environment to a clean state
 
 # TODO: Future security enhancements could include:
@@ -15,4 +15,4 @@ if (Test-Path $TestDrive) {
     Remove-Item -Path $TestDrive -Recurse -Force
 }
 
-Write-Verbose "Test environment reset complete" 
+Write-Verbose "Test environment reset complete"

@@ -1,4 +1,4 @@
-function Write-CursorPromptLog {
+﻿function Write-CursorPromptLog {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, Position = 0)]
@@ -17,4 +17,4 @@ function Write-CursorPromptLog {
 
     Add-Content -Path $LogPath -Value $entry
     Write-Verbose "[SBD] Logged cursor prompt: $Message"
-} 
+}

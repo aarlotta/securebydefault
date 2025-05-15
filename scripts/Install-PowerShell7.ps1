@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Installs the latest stable PowerShell 7.x system-wide using winget.
     Only installs if pwsh is missing or outdated (< 7.0.0).
@@ -21,18 +21,18 @@ function Get-PwshVersion {
 $pesterVersion = Get-PwshVersion
 
 if ($Force -or -not $pesterVersion -or [version]$pesterVersion -lt [version]'7.0.0') {
-    Write-Host "🔍 Installing PowerShell 7.x using winget..." -ForegroundColor Yellow
+    Write-Host "ðŸ” Installing PowerShell 7.x using winget..." -ForegroundColor Yellow
 
     $wingetInstalled = Get-Command winget -ErrorAction SilentlyContinue
     if (-not $wingetInstalled) {
-        Write-Error "❌ Winget is not available on this system. Please install it from the Microsoft Store."
+        Write-Error "âŒ Winget is not available on this system. Please install it from the Microsoft Store."
         return
     }
 
     # Install system-wide
     Start-Process -FilePath "winget" -ArgumentList 'install --id Microsoft.Powershell --source winget --scope machine --accept-package-agreements --accept-source-agreements --silent' -NoNewWindow -Wait
 
-    Write-Host "✅ PowerShell 7 installed system-wide." -ForegroundColor Green
+    Write-Host "âœ… PowerShell 7 installed system-wide." -ForegroundColor Green
 } else {
-    Write-Host "✅ PowerShell 7 already installed: v$pesterVersion" -ForegroundColor Green
-} 
+    Write-Host "âœ… PowerShell 7 already installed: v$pesterVersion" -ForegroundColor Green
+}

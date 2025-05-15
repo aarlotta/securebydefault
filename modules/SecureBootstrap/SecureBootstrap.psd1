@@ -1,4 +1,4 @@
-@{
+﻿@{
     RootModule = 'SecureBootstrap.psm1'
     ModuleVersion = '0.1.0'
     GUID = 'a1b2c3d4-e5f6-4a5b-8c7d-9e0f1a2b3c4d'
@@ -27,4 +27,4 @@
             Disclaimer = 'This module is part of a commercial automation project. Use at your own risk. Redistribution prohibited without license.'
         }
     }
-} 
+}

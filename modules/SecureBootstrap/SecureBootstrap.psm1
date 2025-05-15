@@ -1,4 +1,4 @@
-# SecureBootstrap.psm1
+﻿# SecureBootstrap.psm1
 # Main module file for SecureBootstrap
 
 # TODO: Future security enhancements could include:
@@ -21,4 +21,4 @@ Export-ModuleMember -Function @(
     "Write-SbdLog",
     "Test-DockerReady",
     "Invoke-PesterSafe"
-) 
+)

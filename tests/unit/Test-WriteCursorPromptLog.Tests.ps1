@@ -1,8 +1,8 @@
-BeforeAll {
+﻿BeforeAll {
     $requiredVersion = [Version]'5.5.0'
     $pesterVersion = (Get-Module -ListAvailable -Name Pester | Sort-Object Version -Descending | Select-Object -First 1).Version
     if ($pesterVersion -lt $requiredVersion) {
-        throw "❌ Pester version $($requiredVersion) or higher is required. Current: $($pesterVersion)"
+        throw "âŒ Pester version $($requiredVersion) or higher is required. Current: $($pesterVersion)"
     }
 }
 
@@ -38,7 +38,7 @@ Describe "Write-CursorPromptLog" {
         It "Should append messages with timestamps" {
             $testMessage = "Test message $(Get-Random)"
             Write-CursorPromptLog -Message $testMessage -LogPath $testLogPath
-            
+
             $content = Get-Content $testLogPath
             $content | Should -Match "# \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] $testMessage"
         }
@@ -46,9 +46,9 @@ Describe "Write-CursorPromptLog" {
         It "Should support positional parameters" {
             $testMessage = "Positional test message $(Get-Random)"
             Write-CursorPromptLog $testMessage -LogPath $testLogPath
-            
+
             $content = Get-Content $testLogPath
             $content | Should -Match "# \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] $testMessage"
         }
     }
-} 
+}

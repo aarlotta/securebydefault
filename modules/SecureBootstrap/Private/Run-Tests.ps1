@@ -1,4 +1,4 @@
-# Run-Tests.ps1
+﻿# Run-Tests.ps1
 # Supports both Pester v4 and v5 gracefully
 
 # Ensure UTF-8 encoding for emoji and Unicode compatibility
@@ -22,4 +22,4 @@ try {
 catch {
     Write-SbdLog -Message "Pester failed to execute: $($_.Exception.Message)" -Level Error
     throw
-} 
+}

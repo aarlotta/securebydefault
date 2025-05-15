@@ -1,4 +1,4 @@
-# .pester.ps1
+﻿# .pester.ps1
 # Pester v5+ test configuration for SecureByDefault
 
 @{
@@ -13,4 +13,4 @@
         Enabled = $true
         OutputPath = "TestResults.xml"
     }
-} 
+}
