@@ -1,14 +1,15 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $root = Resolve-Path "$here\..\.."
-$modulePath = Join-Path $root "modules\SecureBootstrap\SecureBootstrap.psd1"
+$modulePath = Resolve-Path "$PSScriptRoot\..\..\modules\SecureBootstrap\SecureBootstrap.psd1" -ErrorAction SilentlyContinue
 
-if (-not (Test-Path $modulePath)) {
-    throw "❌ Could not resolve module path for SecureBootstrap."
+if (-not $modulePath) {
+    throw "❌ Could not resolve module path for SecureBootstrap at expected location: $PSScriptRoot\..\.."
 }
 
 Import-Module $modulePath -Force -ErrorAction Stop
 
 // ... existing code ...
+
 
 
 
