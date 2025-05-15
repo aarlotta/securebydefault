@@ -257,7 +257,11 @@ if ($BuildDocker -or $Rebuild) {
     $runTestsPath = Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Run-Tests.ps1"
     if (Test-Path $runTestsPath) {
         Write-Host "[SBD] ▶️ Running environment validation tests..." -ForegroundColor Cyan
-        pwsh -File $runTestsPath
+        $pwshPath = Get-Command pwsh -ErrorAction SilentlyContinue
+        if (-not $pwshPath) {
+            $pwshPath = "powershell.exe"
+        }
+        & $pwshPath -File $runTestsPath
     } else {
         Write-Warning "[SBD] Skipping tests: Run-Tests.ps1 not found in module Private folder."
     }
@@ -275,7 +279,7 @@ if ($BuildDocker -or $Rebuild) {
         Write-Information -MessageData "[SBD] 🔁 Docker image rebuilt (no cache)." -InformationAction Continue
     } else {
         if (-not (Get-Command New-SbdDockerEnvironment -ErrorAction SilentlyContinue)) {
-            Import-Module ./modules/SecureBootstrap/SecureBootstrap.psd1 -Force
+            Import-Module (Join-Path $PSScriptRoot "modules/SecureBootstrap/SecureBootstrap.psd1") -Force
         }
         New-SbdDockerEnvironment @dockerParams
     }
