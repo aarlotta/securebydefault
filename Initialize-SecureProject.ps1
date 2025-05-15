@@ -339,6 +339,41 @@ if ($BuildDocker -or $Rebuild) {
 
 Write-SbdLog -Message "Project structure initialized. Ready for module development" -Level Success
 
+# Function to build Docker environment
+function New-DockerEnvironment {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    param(
+        [switch]$Rebuild
+    )
+    $dockerfilePath = Join-Path $PSScriptRoot "resources/docker/Dockerfile"
+    if (-not (Test-Path $dockerfilePath)) {
+        Write-Error "❌ Dockerfile not found at: $dockerfilePath"
+        return
+    }
+
+    $buildArgs = @(
+        "build",
+        "-t", "securebydefault/base",
+        "-f", $dockerfilePath,
+        "."
+    )
+
+    if ($Rebuild) {
+        $buildArgs += "--no-cache"
+    }
+
+    if ($PSCmdlet.ShouldProcess("Docker", "Build image")) {
+        Write-Host "🔨 Building Docker image..." -ForegroundColor Cyan
+        docker $buildArgs
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "✅ Docker image built successfully" -ForegroundColor Green
+        } else {
+            Write-Error "❌ Docker build failed"
+        }
+    }
+}
+
+
 
 
 
