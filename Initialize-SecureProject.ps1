@@ -39,8 +39,8 @@ param(
 )
 
 # Ensure UTF-8 encoding for emoji and Unicode compatibility
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
+. "$PSScriptRoot\modules\SecureBootstrap\Private\Helpers.ps1"
+Set-Utf8Encoding
 
 # TODO: Future security enhancements could include:
 # - Execution policy management
@@ -65,7 +65,7 @@ function New-DirectoryIfMissing {
     if (-not (Test-Path -Path $Path -PathType Container)) {
         if ($PSCmdlet.ShouldProcess($Path, "Create directory")) {
             New-Item -Path $Path -ItemType Directory -Force | Out-Null
-            Write-Verbose "Created directory: $Path"
+            Write-SbdLog -Message "Created directory: $Path" -Level Verbose
         }
     }
 }
@@ -84,7 +84,7 @@ function New-FileIfMissing {
             if ($Content) {
                 [System.IO.File]::WriteAllText($Path, $Content, [System.Text.Encoding]::UTF8)
             }
-            Write-Verbose "Created file: $Path"
+            Write-SbdLog -Message "Created file: $Path" -Level Verbose
         }
     }
 }
@@ -108,11 +108,11 @@ function Set-GitCommitTemplate {
     # Check if global template is already configured
     $currentTemplate = git config --global commit.template
     if ($currentTemplate) {
-        Write-Verbose "Global Git commit template already configured."
+        Write-SbdLog -Message "Global Git commit template already configured" -Level Verbose
     } else {
         if ($PSCmdlet.ShouldProcess("Global Git config", "Set commit template")) {
             git config --global commit.template $templatePath
-            Write-Verbose "Configured global Git commit template"
+            Write-SbdLog -Message "Configured global Git commit template" -Level Success
         }
     }
 }
@@ -122,49 +122,49 @@ function New-InitialCommit {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param()
     if (-not (git status --porcelain)) {
-        Write-Verbose "No changes to commit"
+        Write-SbdLog -Message "No changes to commit" -Level Verbose
         return
     }
 
     if ($PSCmdlet.ShouldProcess("Git repository", "Create initial commit")) {
         git add .
         git commit -m "chore(init): initialize project structure and git metadata"
-        Write-Verbose "Created initial commit"
+        Write-SbdLog -Message "Created initial commit" -Level Success
     }
 }
 
 # Main script execution
-Write-Verbose "Initializing PowerShell Module project structure..."
+Write-SbdLog -Message "Initializing PowerShell Module project structure..." -Level Info
 
 # Handle Git initialization safely
 if (-not (Test-GitInitialized)) {
-    Write-Verbose "No Git repository found. Initializing..."
+    Write-SbdLog -Message "No Git repository found. Initializing..." -Level Info
     if ($PSCmdlet.ShouldProcess("Git", "Initialize repository")) {
         git init | Out-Null
-        Write-Verbose "Git repository initialized."
+        Write-SbdLog -Message "Git repository initialized" -Level Success
 
         # Optional: Add default remote if missing
         git remote get-url origin 2>&1 | Out-Null
         if ($LASTEXITCODE -ne 0) {
             git remote add origin https://github.com/aarlotta/securebydefault
-            Write-Verbose "Git remote 'origin' configured."
+            Write-SbdLog -Message "Git remote 'origin' configured" -Level Success
         }
     }
 } else {
-    Write-Verbose "Git repository already exists. Verifying remote..."
+    Write-SbdLog -Message "Git repository already exists. Verifying remote..." -Level Info
 
     git remote get-url origin 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) {
         if ($PSCmdlet.ShouldProcess("Git", "Add missing remote origin")) {
             git remote add origin https://github.com/aarlotta/securebydefault
-            Write-Verbose "Git remote 'origin' added."
+            Write-SbdLog -Message "Git remote 'origin' added" -Level Success
         }
     } else {
-        Write-Verbose "Git remote 'origin' already set."
+        Write-SbdLog -Message "Git remote 'origin' already set" -Level Success
     }
 
     if ($Force) {
-        Write-Warning "Force flag detected, but .git will NOT be deleted to preserve history."
+        Write-SbdLog -Message "Force flag detected, but .git will NOT be deleted to preserve history" -Level Warning
     }
 }
 
@@ -182,9 +182,9 @@ foreach ($dir in $directories) {
 $writeCursorPromptLogPath = Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Write-CursorPromptLog.ps1"
 if (Test-Path $writeCursorPromptLogPath) {
     . $writeCursorPromptLogPath
-    Write-CursorPromptLog -Message "Project structure initialized" -Verbose
+    Write-SbdLog -Message "Project structure initialized" -Level Success
 } else {
-    Write-Warning "[SBD] Write-CursorPromptLog.ps1 not found at: $writeCursorPromptLogPath"
+    Write-SbdLog -Message "Write-CursorPromptLog.ps1 not found at: $writeCursorPromptLogPath" -Level Warning
 }
 
 # Create .gitignore if it doesn't exist
@@ -211,17 +211,17 @@ $updated = $false
 foreach ($entry in $entriesToAdd) {
     if (-not ($currentGitignore -contains $entry)) {
         if ($PSCmdlet.ShouldProcess($gitignorePath, "Append missing .gitignore entry: $entry")) {
-            Add-Content -Path $gitignorePath -Value $entry
-            Write-Verbose "Appended .gitignore entry: $entry"
+            Add-Content -Path $gitignorePath -Value $entry -Encoding UTF8
+            Write-SbdLog -Message "Appended .gitignore entry: $entry" -Level Verbose
             $updated = $true
         }
     }
 }
 
 if ($updated) {
-    Write-Verbose ".gitignore updated (entries added without overwriting)."
+    Write-SbdLog -Message ".gitignore updated (entries added without overwriting)" -Level Success
 } else {
-    Write-Verbose ".gitignore is already up to date."
+    Write-SbdLog -Message ".gitignore is already up to date" -Level Info
 }
 
 # Configure Git commit template
@@ -232,9 +232,6 @@ if (-not (git rev-parse --verify HEAD 2>$null)) {
     New-InitialCommit
 }
 
-# Ensure module helpers are loaded
-. "$PSScriptRoot\modules\SecureBootstrap\Private\Helpers.ps1"
-
 # Docker environment operations
 $dockerPath = "resources/docker"
 
@@ -243,7 +240,7 @@ if ($CleanUp) {
     if (Test-Path $dockerPath) {
         if ($PSCmdlet.ShouldProcess($dockerPath, "Remove Docker environment folder")) {
             Remove-Item -Path $dockerPath -Recurse -Force
-            Write-SbdLog -Message "Docker environment folder removed: $dockerPath" -Level Info
+            Write-SbdLog -Message "Docker environment folder removed: $dockerPath" -Level Success
         }
     } else {
         Write-SbdLog -Message "Docker environment folder not found (already clean)" -Level Warning
@@ -305,4 +302,4 @@ if ($BuildDocker -or $Rebuild) {
     }
 }
 
-Write-Verbose "Project structure initialized. Ready for module development."
+Write-SbdLog -Message "Project structure initialized. Ready for module development" -Level Success

@@ -1,3 +1,14 @@
+# [2025-05-14] feat(helpers): add UTF-8 encoding enforcement
+function Set-Utf8Encoding {
+    [CmdletBinding()]
+    param()
+    
+    # Set console and output encoding to UTF-8
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+    $OutputEncoding = [System.Text.Encoding]::UTF8
+    Write-Verbose "[SBD] 📝 UTF-8 encoding enforced for console and output"
+}
+
 function Write-InternalLog {
     [CmdletBinding()]
     param (
@@ -6,7 +17,7 @@ function Write-InternalLog {
     )
     
     Write-Verbose "[internal]: $Message"
-} 
+}
 
 # [2025-05-14] feat(helpers): add Test-DockerReady to check Docker availability and daemon status
 function Test-DockerReady {
@@ -33,7 +44,7 @@ function Test-DockerReady {
         Write-Error "[SBD] ❌ Docker is installed but not running. Please start Docker Desktop or the Docker daemon."
         return $false
     }
-} 
+}
 
 # [2025-05-14] feat(helpers): add Write-SbdLog for consistent logging with emojis
 function Write-SbdLog {
@@ -51,10 +62,7 @@ function Write-SbdLog {
     )
     
     # Ensure UTF-8 encoding for emoji support
-    if (-not $NoEmoji) {
-        [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-        $OutputEncoding = [System.Text.Encoding]::UTF8
-    }
+    Set-Utf8Encoding
     
     # Define emoji and color mappings
     $emojiMap = @{
