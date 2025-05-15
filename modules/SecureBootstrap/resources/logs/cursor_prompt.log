@@ -305,3 +305,13 @@
 # 2025-05-14 21:13:42Z [SBD] [v] Global Git commit template already configured
 # 2025-05-14 21:13:42Z [SBD] [+] Docker environment folder removed: resources/docker
 # 2025-05-14 21:13:42Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 21:15:30Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 21:15:30Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 21:15:30Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 21:15:30Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 21:15:30Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 21:15:30Z [SBD] [+] Project structure initialized
+# 2025-05-14 21:15:30Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 21:15:30Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 21:15:30Z [SBD] [!] Docker environment folder not found (already clean)
+# 2025-05-14 21:15:30Z [SBD] [+] Project structure initialized. Ready for module development

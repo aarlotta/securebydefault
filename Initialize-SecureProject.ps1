@@ -41,9 +41,13 @@ param(
 # Check for PowerShell 7 and install if needed
 $installPwshScript = Join-Path $PSScriptRoot "scripts\Install-PowerShell7.ps1"
 if (Test-Path $installPwshScript) {
-    if (-not (Get-Command pwsh -ErrorAction SilentlyContinue)) {
-        Write-Host "🔍 PowerShell 7 not found. Installing..." -ForegroundColor Yellow
-        . $installPwshScript
+    if (-not $CleanUp) {
+        if (-not (Get-Command pwsh -ErrorAction SilentlyContinue)) {
+            Write-Host "🔍 PowerShell 7 not found. Installing..." -ForegroundColor Yellow
+            . $installPwshScript
+        }
+    } else {
+        Write-SbdLog -Message "Skipping PowerShell installation during CleanUp" -Level Info
     }
 } else {
     Write-Warning "Install-PowerShell7.ps1 not found at: $installPwshScript"
@@ -334,3 +338,6 @@ if ($BuildDocker -or $Rebuild) {
 }
 
 Write-SbdLog -Message "Project structure initialized. Ready for module development" -Level Success
+
+# Suggest running PSScriptAnalyzer for code quality
+Write-SbdLog -Message "🔍 Run 'Invoke-ScriptAnalyzer -Path . -Recurse' to check for whitespace and linting issues." -Level Info
