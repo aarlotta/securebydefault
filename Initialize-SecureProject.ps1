@@ -274,9 +274,10 @@ if ($BuildDocker -or $Rebuild) {
     if (Test-Path $runTestsPath) {
         Write-SbdLog -Message "Running environment validation tests..." -Level Info
         $pwshCommand = Get-Command pwsh -ErrorAction SilentlyContinue
-        $pwshPath = if ($pwshCommand) { $pwshCommand.Source } else { "powershell.exe" }
+        $pwshCmd = if ($pwshCommand) { $pwshCommand.Source } else { "powershell.exe" }
 
-        & "$pwshPath" -File "$runTestsPath"
+        # Safely invoke:
+        Start-Process -FilePath $pwshCmd -ArgumentList "-File `"$runTestsPath`"" -NoNewWindow -Wait
     } else {
         Write-SbdLog -Message "Skipping tests: Run-Tests.ps1 not found in module Private folder" -Level Warning
     }
