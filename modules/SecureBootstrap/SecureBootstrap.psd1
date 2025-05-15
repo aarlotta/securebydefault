@@ -9,7 +9,11 @@
     PowerShellVersion = '5.1'
     FunctionsToExport = @(
         "Write-CursorPromptLog",
-        "New-SecureDockerEnvironment"
+        "New-SecureDockerEnvironment",
+        "Set-Utf8Encoding",
+        "Write-SbdLog",
+        "Write-InternalLog",
+        "Test-DockerReady"
     )
     CmdletsToExport = @()
     VariablesToExport = @()

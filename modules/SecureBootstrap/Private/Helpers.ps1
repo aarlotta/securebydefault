@@ -82,7 +82,7 @@ function Test-DockerReady {
 
     # Check if Docker daemon is running
     try {
-        $info = docker info --format '{{json .}}' 2>$null | ConvertFrom-Json
+        $info = docker info --format "{{json .}}" 2>$null | ConvertFrom-Json
         if (-not $info.ServerVersion) {
             throw "Missing Docker server version"
         }

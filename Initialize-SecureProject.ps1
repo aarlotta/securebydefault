@@ -39,25 +39,18 @@ param(
 )
 
 # Ensure helpers are available and encoding is set
-$helpersPath = Join-Path $PSScriptRoot "modules\SecureBootstrap\Private\Helpers.ps1"
-if (Test-Path $helpersPath) {
-    . $helpersPath
-    Set-Utf8Encoding
-    Write-SbdLog -Message "Helpers loaded and UTF-8 encoding set" -Level Debug
-} else {
-    Write-Error "[SBD] ❌ Helpers.ps1 not found at: $helpersPath"
-    return
-}
-
-# Ensure SecureBootstrap module is available
 $modulePath = Join-Path $PSScriptRoot "modules\SecureBootstrap\SecureBootstrap.psd1"
 if (Test-Path $modulePath) {
     Import-Module $modulePath -Force
-    Write-SbdLog -Message "SecureBootstrap module loaded" -Level Success
+    Write-Host "[SBD] ✅ SecureBootstrap module loaded"
 } else {
-    Write-SbdLog -Message "SecureBootstrap module not found at: $modulePath" -Level Error
+    Write-Error "[SBD] ❌ SecureBootstrap module not found at: $modulePath"
     return
 }
+
+# Now that the module is loaded, we can use its functions
+Set-Utf8Encoding
+Write-SbdLog -Message "Helpers loaded and UTF-8 encoding set" -Level Debug
 
 # TODO: Future security enhancements could include:
 # - Execution policy management
