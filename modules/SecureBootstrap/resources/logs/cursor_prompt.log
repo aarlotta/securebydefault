@@ -1939,3 +1939,37 @@
 # 2025-05-14 22:27:07Z [SBD] [+] Successfully built Docker image: securebydefault/base
 # 2025-05-14 22:27:08Z [SBD] [+] Tests completed successfully
 # 2025-05-14 22:27:08Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:32:08Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:32:08Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:32:08Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:32:08Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:32:08Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:32:08Z [SBD] [!] Force flag detected, but .git will NOT be deleted to preserve history
+# 2025-05-14 22:32:08Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:32:08Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:32:08Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:32:08Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:32:10Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:32:10Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:32:10Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:32:10Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:32:10Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:32:10Z [SBD] [!] Force flag detected, but .git will NOT be deleted to preserve history
+# 2025-05-14 22:32:10Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:32:10Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:32:10Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:32:11Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:32:13Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:32:13Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:32:13Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:32:13Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:32:13Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:32:13Z [SBD] [!] Force flag detected, but .git will NOT be deleted to preserve history
+# 2025-05-14 22:32:13Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:32:13Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:32:13Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:32:13Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:33:34Z [SBD] [i] Running Pester tests...
+# 2025-05-14 22:33:35Z [SBD] [v] Using Pester 5+ configuration mode
+# 2025-05-14 22:33:56Z [SBD] [i] Running Pester tests...
+# 2025-05-14 22:33:56Z [SBD] [v] Using Pester 5+ configuration mode

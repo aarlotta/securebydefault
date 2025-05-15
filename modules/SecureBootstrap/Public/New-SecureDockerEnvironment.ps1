@@ -13,7 +13,7 @@ function New-SecureDockerEnvironment {
     )
 
     begin {
-        Write-Host "[SB] ðŸ›  Creating secure Docker environment at: $Path" -ForegroundColor Cyan
+        Write-Host "[SB] 🚀 Creating secure Docker environment at: $Path" -ForegroundColor Cyan
 
         if (-Not (Test-Path $Path)) {
             New-Item -ItemType Directory -Path $Path -Force | Out-Null
@@ -40,15 +40,15 @@ function New-SecureDockerEnvironment {
         }
 
         # 4. Final output
-        Write-Host "[SB] âœ… Dockerfile created: $dockerfilePath" -ForegroundColor Green
+        Write-Host "[SB] ✅ Dockerfile created: $dockerfilePath" -ForegroundColor Green
         if ($EnableTests) {
-            Write-Host "[SB] âœ… Tests folder created: $testDir" -ForegroundColor Green
+            Write-Host "[SB] ✅ Tests folder created: $testDir" -ForegroundColor Green
         }
-        Write-Host "[SB] â„¹ï¸  Run: docker build -t $ImageName `"$Path`"" -ForegroundColor Yellow
+        Write-Host "[SB] ℹ️  Run: docker build -t $ImageName `"$Path`"" -ForegroundColor Yellow
     }
 
     end {
-        Write-Host "[SB] ðŸ§ª Secure Docker environment initialized." -ForegroundColor Cyan
+        Write-Host "[SB] 🎉 Secure Docker environment initialized." -ForegroundColor Cyan
     }
 }
 
@@ -83,6 +83,7 @@ function New-SecureDockerEnvironment {
     Module: SecureBootstrap
     Version: 1.0.0
 #>
+
 
 
 

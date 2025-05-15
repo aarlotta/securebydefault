@@ -27,14 +27,15 @@ if ($null -eq $current -or $current.Version -lt $MinimumVersion -or $Force) {
 
     try {
         Install-Module @installParams -ErrorAction Stop
-        Write-SbdLog -Message "Pester $MinimumVersion+ installed successfully." -Level Success
+        Write-Host "[SBD] ✅ Pester $MinimumVersion+ installed successfully." -ForegroundColor Green
     } catch {
-        Write-SbdLog -Message "Failed to install Pester: $($_.Exception.Message)" -Level Error
+        Write-Host "[SBD] ❌ Failed to install Pester: $($_.Exception.Message)" -ForegroundColor Red
         throw
     }
 } else {
-    Write-SbdLog -Message "Pester $($current.Version) already installed." -Level Info
+    Write-Host "[SBD] ℹ️ Pester $($current.Version) already installed." -ForegroundColor Cyan
 }
+
 
 
 

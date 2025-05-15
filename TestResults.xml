@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="5" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2025-05-14" time="22:33:56">
+  <environment clr-version="4.0.30319.42000" user-domain="BAXIT" cwd="E:\securebydefault" platform="Microsoft Windows 11 Enterprise|C:\WINDOWS|\Device\Harddisk0\Partition3" machine-name="TBOX1" nunit-version="2.5.8.0" os-version="10.0.26100" user="aarlotta" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="0.312" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="E:\securebydefault\tests\unit\Test-WriteCursorPromptLog.Tests.ps1" executed="True" result="Success" success="True" time="0.2309" asserts="0" description="E:\securebydefault\tests\unit\Test-WriteCursorPromptLog.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Write-CursorPromptLog" executed="True" result="Success" success="True" time="0.1328" asserts="0" description="Write-CursorPromptLog">
+            <results>
+              <test-suite type="TestFixture" name="Write-CursorPromptLog.Function Loading" executed="True" result="Success" success="True" time="0.0449" asserts="0" description="Write-CursorPromptLog.Function Loading">
+                <results>
+                  <test-case description="Should load without Export-ModuleMember errors" name="Write-CursorPromptLog.Function Loading.Should load without Export-ModuleMember errors" time="0.0216" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should be available in the session" name="Write-CursorPromptLog.Function Loading.Should be available in the session" time="0.0148" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="Write-CursorPromptLog.Logging Behavior" executed="True" result="Success" success="True" time="0.1141" asserts="0" description="Write-CursorPromptLog.Logging Behavior">
+                <results>
+                  <test-case description="Should create log file if it doesn't exist" name="Write-CursorPromptLog.Logging Behavior.Should create log file if it doesn't exist" time="0.0182" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should append messages with timestamps" name="Write-CursorPromptLog.Logging Behavior.Should append messages with timestamps" time="0.0187" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Should support positional parameters" name="Write-CursorPromptLog.Logging Behavior.Should support positional parameters" time="0.0208" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
