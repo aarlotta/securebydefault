@@ -41,7 +41,11 @@ function Write-SbdLog {
     }
 
     $logPath = Join-Path $logDir "cursor_prompt.log"
-    Add-Content -Path $logPath -Value "# $(Get-Date -Format 'u') $formattedMessage" -Encoding UTF8
+    try {
+        [System.IO.File]::AppendAllText($logPath, "# $(Get-Date -Format 'u') $formattedMessage`r`n", [System.Text.UTF8Encoding]::UTF8)
+    } catch {
+        Write-Warning "[SBD] ⚠️ Could not write to cursor_prompt.log: $($_.Exception.Message)"
+    }
 }
 
 function Write-InternalLog {
@@ -102,6 +106,7 @@ function Invoke-PesterSafe {
         throw
     }
 }
+
 
 
 
