@@ -9,7 +9,7 @@
     PowerShellVersion = '5.1'
     FunctionsToExport = @(
         "Write-CursorPromptLog",
-        "New-SecureDockerEnvironment",
+        "New-SbdDockerEnvironment",
         "Set-Utf8Encoding",
         "Write-SbdLog",
         "Write-InternalLog",

@@ -15,3 +15,30 @@
 # [2025-05-14 20:29:11] Project structure initialized
 # [2025-05-14 20:30:10] Project structure initialized
 # [2025-05-14 20:30:14] Project structure initialized
+# 2025-05-14 20:42:46Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 20:42:46Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 20:42:46Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 20:42:46Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 20:42:46Z [SBD] [!] Force flag detected, but .git will NOT be deleted to preserve history
+# 2025-05-14 20:42:46Z [SBD] [+] Project structure initialized
+# 2025-05-14 20:42:46Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 20:42:46Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 20:42:46Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 20:43:18Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 20:43:18Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 20:43:18Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 20:43:18Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 20:43:18Z [SBD] [+] Project structure initialized
+# 2025-05-14 20:43:18Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 20:43:18Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 20:43:18Z [SBD] [i] Running environment validation tests...
+# 2025-05-14 20:43:18Z [SBD] [i] Running Pester tests...
+# 2025-05-14 20:43:19Z [SBD] [v] Using Pester 4 compatibility mode
+# 2025-05-14 20:43:19Z [SBD] [x] Pester failed to execute: Parameter cannot be processed because the parameter name 'Output' is ambiguous. Possible matches include: -OutputXml -OutputFile -OutputFormat.
+# 2025-05-14 20:43:22Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 20:43:22Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 20:43:22Z [SBD] [+] Created Docker environment directory: resources/docker
+# 2025-05-14 20:43:22Z [SBD] [+] Created Dockerfile at: resources\docker\Dockerfile
+# 2025-05-14 20:43:35Z [SBD] [+] Successfully built Docker image: securebydefault/base
+# 2025-05-14 20:43:36Z [SBD] [+] Tests completed successfully
+# 2025-05-14 20:43:36Z [SBD] [+] Project structure initialized. Ready for module development

@@ -273,11 +273,10 @@ if ($BuildDocker -or $Rebuild) {
     $runTestsPath = Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Run-Tests.ps1"
     if (Test-Path $runTestsPath) {
         Write-SbdLog -Message "Running environment validation tests..." -Level Info
-        $pwshPath = Get-Command pwsh -ErrorAction SilentlyContinue
-        if (-not $pwshPath) {
-            $pwshPath = "powershell.exe"
-        }
-        & $pwshPath -File $runTestsPath
+        $pwshCommand = Get-Command pwsh -ErrorAction SilentlyContinue
+        $pwshPath = if ($pwshCommand) { $pwshCommand.Source } else { "powershell.exe" }
+
+        & "$pwshPath" -File "$runTestsPath"
     } else {
         Write-SbdLog -Message "Skipping tests: Run-Tests.ps1 not found in module Private folder" -Level Warning
     }

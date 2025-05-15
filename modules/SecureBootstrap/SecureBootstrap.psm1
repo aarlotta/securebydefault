@@ -9,11 +9,13 @@
 
 # Dot source each function file explicitly
 . "$PSScriptRoot\Public\Write-CursorPromptLog.ps1"
+. "$PSScriptRoot\Public\New-SbdDockerEnvironment.ps1"
 . "$PSScriptRoot\Private\Helpers.ps1"
 
 # Export public functions
 Export-ModuleMember -Function @(
     "Write-CursorPromptLog",
+    "New-SbdDockerEnvironment",
     "Set-Utf8Encoding",
     "Write-SbdLog",
     "Write-InternalLog",

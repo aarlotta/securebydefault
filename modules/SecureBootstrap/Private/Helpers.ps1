@@ -1,61 +1,47 @@
 # [2025-05-14] feat(helpers): add UTF-8 encoding enforcement and unified logging
 function Set-Utf8Encoding {
-    [CmdletBinding()]
-    param()
-    
-    # Set console and output encoding to UTF-8
     [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
     $Global:OutputEncoding = [System.Text.Encoding]::UTF8
-    Write-Verbose "[SBD] 📝 UTF-8 encoding enforced for console and output"
 }
 
 function Write-SbdLog {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [string]$Message,
-        
-        [Parameter(Mandatory = $false)]
-        [ValidateSet('Info', 'Success', 'Warning', 'Error', 'Debug')]
-        [string]$Level = 'Info'
+        [Parameter(Mandatory)][string]$Message,
+        [ValidateSet("Info", "Success", "Warning", "Error", "Debug", "Verbose")][string]$Level = "Info"
     )
-    
+
     # Ensure UTF-8 encoding for emoji support
     Set-Utf8Encoding
-    
-    # Define emoji and color mappings
-    $emojiMap = @{
-        'Info'    = 'ℹ️'
-        'Success' = '✅'
-        'Warning' = '⚠️'
-        'Error'   = '❌'
-        'Debug'   = '🐞'
+
+    $prefix = switch ($Level) {
+        "Info"    { "[SBD] [i] " }
+        "Success" { "[SBD] [+] " }
+        "Warning" { "[SBD] [!] " }
+        "Error"   { "[SBD] [x] " }
+        "Debug"   { "[SBD] [d] " }
+        "Verbose" { "[SBD] [v] " }
     }
-    
-    $colorMap = @{
-        'Info'    = 'Cyan'
-        'Success' = 'Green'
-        'Warning' = 'Yellow'
-        'Error'   = 'Red'
-        'Debug'   = 'DarkGray'
-    }
-    
-    # Format the message with emoji
-    $formattedMessage = "[SBD] $($emojiMap[$Level]) $Message"
-    
-    # Write the message with appropriate color
+
+    $formattedMessage = "$prefix$Message"
+
     switch ($Level) {
-        'Error'   { Write-Error $formattedMessage }
+        'Info'    { Write-Host $formattedMessage -ForegroundColor Cyan }
+        'Success' { Write-Host $formattedMessage -ForegroundColor Green }
         'Warning' { Write-Warning $formattedMessage }
+        'Error'   { Write-Error $formattedMessage }
         'Debug'   { Write-Debug $formattedMessage }
-        default   { Write-Host $formattedMessage -ForegroundColor $colorMap[$Level] }
+        'Verbose' { Write-Verbose $formattedMessage }
     }
-    
-    # Log to file if needed
-    $logPath = Join-Path $PSScriptRoot "..\resources\logs\cursor_prompt.log"
-    if (Test-Path (Split-Path $logPath -Parent)) {
-        Add-Content -Path $logPath -Value "# $(Get-Date -Format 'u') $formattedMessage" -Encoding UTF8
+
+    # Ensure log directory exists
+    $logDir = Join-Path $PSScriptRoot "..\resources\logs"
+    if (-not (Test-Path $logDir)) {
+        New-Item -Path $logDir -ItemType Directory -Force | Out-Null
     }
+
+    $logPath = Join-Path $logDir "cursor_prompt.log"
+    Add-Content -Path $logPath -Value "# $(Get-Date -Format 'u') $formattedMessage" -Encoding UTF8
 }
 
 function Write-InternalLog {

@@ -15,7 +15,7 @@ try {
     } else {
         # Fallback for older Pester 4
         Write-SbdLog -Message "Using Pester 4 compatibility mode" -Level Verbose
-        Invoke-Pester -Script "./tests" -Output Detailed
+        Invoke-Pester -Script "./tests"
     }
     Write-SbdLog -Message "Pester tests completed successfully" -Level Success
 }
