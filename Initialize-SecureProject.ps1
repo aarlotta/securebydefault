@@ -38,7 +38,7 @@ param(
     [switch]$PruneDocker
 )
 
-# Set UTF-8 encoding for proper emoji support
+# Ensure UTF-8 encoding for emoji and Unicode compatibility
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
@@ -232,6 +232,9 @@ if (-not (git rev-parse --verify HEAD 2>$null)) {
     New-InitialCommit
 }
 
+# Ensure module helpers are loaded
+. "$PSScriptRoot\modules\SecureBootstrap\Private\Helpers.ps1"
+
 # Docker environment operations
 $dockerPath = "resources/docker"
 
@@ -240,18 +243,21 @@ if ($CleanUp) {
     if (Test-Path $dockerPath) {
         if ($PSCmdlet.ShouldProcess($dockerPath, "Remove Docker environment folder")) {
             Remove-Item -Path $dockerPath -Recurse -Force
-            Write-Information -MessageData "[SBD] 🧹 Docker environment removed: $dockerPath" -InformationAction Continue
+            Write-SbdLog -Message "Docker environment folder removed: $dockerPath" -Level Info
         }
     } else {
-        Write-Information -MessageData "[SBD] No Docker environment found to clean." -InformationAction Continue
+        Write-SbdLog -Message "Docker environment folder not found (already clean)" -Level Warning
     }
 }
 
 # Docker prune option (clears unused images, containers, volumes)
 if ($PruneDocker) {
-    if ($PSCmdlet.ShouldProcess("Docker", "Prune unused containers and images")) {
-        $null = docker system prune -f
-        Write-Information -MessageData "[SBD] 🧼 Docker system prune completed." -InformationAction Continue
+    if (-not (Test-DockerReady)) {
+        return
+    }
+    if ($PSCmdlet.ShouldProcess("Docker system", "Prune unused resources")) {
+        docker system prune -f
+        Write-SbdLog -Message "Docker system pruned successfully" -Level Success
     }
 }
 
@@ -259,19 +265,22 @@ if ($PruneDocker) {
 if ($BuildDocker -or $Rebuild) {
     $runTestsPath = Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Run-Tests.ps1"
     if (Test-Path $runTestsPath) {
-        Write-Host "[SBD] ▶️ Running environment validation tests..." -ForegroundColor Cyan
+        Write-SbdLog -Message "Running environment validation tests..." -Level Info
         $pwshPath = Get-Command pwsh -ErrorAction SilentlyContinue
         if (-not $pwshPath) {
             $pwshPath = "powershell.exe"
         }
         & $pwshPath -File $runTestsPath
     } else {
-        Write-Warning "[SBD] Skipping tests: Run-Tests.ps1 not found in module Private folder."
+        Write-SbdLog -Message "Skipping tests: Run-Tests.ps1 not found in module Private folder" -Level Warning
     }
 }
 
 # Build or Rebuild Docker environment
 if ($BuildDocker -or $Rebuild) {
+    if (-not (Test-DockerReady)) {
+        return
+    }
     $dockerParams = @{
         Path        = $dockerPath
         ImageName   = "securebydefault/base"
@@ -279,10 +288,18 @@ if ($BuildDocker -or $Rebuild) {
     }
     if ($Rebuild) {
         $null = docker build --no-cache -t securebydefault/base $dockerPath
-        Write-Information -MessageData "[SBD] 🔁 Docker image rebuilt (no cache)." -InformationAction Continue
+        Write-SbdLog -Message "Docker image rebuilt (no cache)" -Level Success
     } else {
+        # Safely import SecureBootstrap module
         if (-not (Get-Command New-SbdDockerEnvironment -ErrorAction SilentlyContinue)) {
-            Import-Module (Join-Path $PSScriptRoot "modules/SecureBootstrap/SecureBootstrap.psd1") -Force
+            $modulePath = Join-Path $PSScriptRoot "modules/SecureBootstrap/SecureBootstrap.psd1"
+            if (Test-Path $modulePath) {
+                Import-Module $modulePath -Force
+                Write-SbdLog -Message "SecureBootstrap module loaded" -Level Success
+            } else {
+                Write-SbdLog -Message "SecureBootstrap module not found at: $modulePath" -Level Error
+                return
+            }
         }
         New-SbdDockerEnvironment @dockerParams
     }
