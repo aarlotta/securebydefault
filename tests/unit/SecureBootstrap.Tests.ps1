@@ -7,12 +7,10 @@
 # - Trust store management tests
 # - Execution policy tests
 
-# Robust module path resolution
-$here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$modulePath = Join-Path (Split-Path -Parent (Split-Path -Parent $here)) "modules\SecureBootstrap\SecureBootstrap.psd1"
-$modulePath = [System.IO.Path]::GetFullPath($modulePath)
-
-Write-Verbose "Resolved module path: $modulePath"
+# Resolve the absolute path to the SecureBootstrap module manifest
+$testRoot    = Split-Path -Parent $MyInvocation.MyCommand.Path
+$projectRoot = Resolve-Path -Path "$testRoot\..\.." | ForEach-Object { $_.Path }
+$modulePath  = Join-Path -Path $projectRoot -ChildPath "modules\SecureBootstrap\SecureBootstrap.psd1"
 
 if (-not (Test-Path $modulePath)) {
     throw "❌ Could not resolve SecureBootstrap module path. Expected at: $modulePath"
@@ -33,12 +31,25 @@ BeforeAll {
 }
 
 Describe "SecureBootstrap Module" {
+    Context "Module Path Resolution" {
+        It "Should resolve module path correctly" {
+            Test-Path $modulePath | Should -Be $true
+        }
+
+        It "Should have valid module manifest" {
+            $manifest = Import-PowerShellDataFile -Path $modulePath
+            $manifest | Should -Not -BeNullOrEmpty
+            $manifest.ModuleVersion | Should -Not -BeNullOrEmpty
+        }
+    }
+
     Context "Module Loading" {
         BeforeAll {
             Remove-Module -Name SecureBootstrap -Force -ErrorAction SilentlyContinue
         }
 
         It "Should import successfully" {
+            Write-Host "[Test] Attempting to import module from: $modulePath" -ForegroundColor Cyan
             { Import-Module $modulePath -Force -ErrorAction Stop } | Should -Not -Throw
             $module = Get-Module -Name SecureBootstrap
             $module | Should -Not -BeNullOrEmpty
@@ -59,6 +70,7 @@ Describe "SecureBootstrap Module" {
 if ($env:GITHUB_ACTIONS -eq "true" -or $env:CI -eq "true" -or $Host.UI.RawUI.WindowTitle -like "*CI*") {
     # do nothing, skip Read-Host
 }
+
 
 
 
