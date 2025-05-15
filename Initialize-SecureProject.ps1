@@ -179,10 +179,13 @@ foreach ($dir in $directories) {
 }
 
 # Initialize cursor prompt logging
-if (-not (Get-Command Write-CursorPromptLog -ErrorAction SilentlyContinue)) {
-    . (Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Write-CursorPromptLog.ps1")
+$writeCursorPromptLogPath = Join-Path $PSScriptRoot "modules/SecureBootstrap/Private/Write-CursorPromptLog.ps1"
+if (Test-Path $writeCursorPromptLogPath) {
+    . $writeCursorPromptLogPath
+    Write-CursorPromptLog -Message "Project structure initialized" -Verbose
+} else {
+    Write-Warning "[SBD] Write-CursorPromptLog.ps1 not found at: $writeCursorPromptLogPath"
 }
-Write-CursorPromptLog -Message "Project structure initialized" -Verbose
 
 # Create .gitignore if it doesn't exist
 $gitignorePath = ".gitignore"

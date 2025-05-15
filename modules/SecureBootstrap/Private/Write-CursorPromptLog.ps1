@@ -1,9 +1,10 @@
 function Write-CursorPromptLog {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [string]$Message,
 
+        [Parameter(Mandatory = $false)]
         [string]$LogPath = "$(Join-Path $PSScriptRoot '../resources/logs/cursor_prompt.log')"
     )
 
@@ -16,4 +17,6 @@ function Write-CursorPromptLog {
 
     Add-Content -Path $LogPath -Value $entry
     Write-Verbose "[SBD] Logged cursor prompt: $Message"
-} 
+}
+
+Export-ModuleMember -Function Write-CursorPromptLog 
