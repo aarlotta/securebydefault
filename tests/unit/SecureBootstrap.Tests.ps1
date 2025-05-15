@@ -15,6 +15,7 @@ BeforeAll {
     }
 }
 
+# Resolve module path using $MyInvocation for reliable path resolution
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $modulePath = Join-Path $here "../../modules/SecureBootstrap/SecureBootstrap.psd1"
 
