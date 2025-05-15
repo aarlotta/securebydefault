@@ -1514,3 +1514,121 @@
 # 2025-05-14 22:13:13Z [SBD] [+] Successfully built Docker image: securebydefault/base
 # 2025-05-14 22:13:14Z [SBD] [+] Tests completed successfully
 # 2025-05-14 22:13:14Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:14:54Z [SBD] [i] Skipping PowerShell installation (requires -Force and not -CleanUp)
+# 2025-05-14 22:14:54Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:14:54Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:14:54Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:14:54Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:14:54Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:14:54Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:14:54Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:14:54Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:14:57Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:14:57Z [SBD] [+] Docker system pruned successfully
+# 2025-05-14 22:14:57Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:15:02Z [SBD] [i] Skipping PowerShell installation (requires -Force and not -CleanUp)
+# 2025-05-14 22:15:02Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:15:02Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:15:02Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:15:02Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:15:02Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:15:02Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:15:02Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:15:02Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:15:02Z [SBD] [+] Docker environment folder removed: resources/docker
+# 2025-05-14 22:15:02Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:15:06Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:15:06Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:15:06Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:15:06Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:15:06Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:15:06Z [SBD] [!] Force flag detected, but .git will NOT be deleted to preserve history
+# 2025-05-14 22:15:06Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:15:06Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:15:06Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:15:06Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:15:10Z [SBD] [i] Skipping PowerShell installation (requires -Force and not -CleanUp)
+# 2025-05-14 22:15:10Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:15:10Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:15:10Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:15:10Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:15:10Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:15:10Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:15:10Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:15:10Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:15:10Z [SBD] [i] Running environment validation tests...
+# 2025-05-14 22:15:10Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:15:10Z [SBD] [i] Running Pester tests...
+# 2025-05-14 22:15:10Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:15:10Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:15:10Z [SBD] [+] Pester tests completed successfully
+# 2025-05-14 22:15:11Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:15:11Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:15:11Z [SBD] [+] Created Docker environment directory: resources/docker
+# 2025-05-14 22:15:11Z [SBD] [+] Created Dockerfile at: resources\docker\Dockerfile
+# 2025-05-14 22:15:12Z [SBD] [+] Successfully built Docker image: securebydefault/base
+# 2025-05-14 22:15:13Z [SBD] [+] Tests completed successfully
+# 2025-05-14 22:15:13Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:15:58Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:15:58Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:15:58Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:15:58Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:15:58Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:15:58Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:15:58Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:15:58Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:15:58Z [SBD] [i] Running environment validation tests...
+# 2025-05-14 22:15:58Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:15:58Z [SBD] [i] Running Pester tests...
+# 2025-05-14 22:16:00Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:16:00Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:16:02Z [SBD] [+] Pester tests completed successfully
+# 2025-05-14 22:16:05Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:16:06Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:16:06Z [SBD] [+] Created Dockerfile at: resources\docker\Dockerfile
+# 2025-05-14 22:16:07Z [SBD] [+] Successfully built Docker image: securebydefault/base
+# 2025-05-14 22:16:08Z [SBD] [+] Tests completed successfully
+# 2025-05-14 22:16:08Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:16:14Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:16:14Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:16:14Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:16:14Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:16:14Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:16:14Z [SBD] [!] Force flag detected, but .git will NOT be deleted to preserve history
+# 2025-05-14 22:16:14Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:16:14Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:16:14Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:16:14Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:16:18Z [SBD] [i] Skipping PowerShell installation (requires -Force and not -CleanUp)
+# 2025-05-14 22:16:18Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:16:18Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:16:18Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:16:18Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:16:18Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:16:18Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:16:18Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:16:18Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:16:18Z [SBD] [+] Docker environment folder removed: resources/docker
+# 2025-05-14 22:16:18Z [SBD] [+] Project structure initialized. Ready for module development
+# 2025-05-14 22:16:22Z [SBD] [i] Skipping PowerShell installation (requires -Force and not -CleanUp)
+# 2025-05-14 22:16:22Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:16:22Z [SBD] [d] Helpers loaded and UTF-8 encoding set
+# 2025-05-14 22:16:22Z [SBD] [i] Initializing PowerShell Module project structure...
+# 2025-05-14 22:16:22Z [SBD] [i] Git repository already exists. Verifying remote...
+# 2025-05-14 22:16:22Z [SBD] [+] Git remote 'origin' already set
+# 2025-05-14 22:16:22Z [SBD] [+] Project structure initialized
+# 2025-05-14 22:16:22Z [SBD] [i] .gitignore is already up to date
+# 2025-05-14 22:16:22Z [SBD] [v] Global Git commit template already configured
+# 2025-05-14 22:16:22Z [SBD] [i] Running environment validation tests...
+# 2025-05-14 22:16:22Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:16:22Z [SBD] [i] Running Pester tests...
+# 2025-05-14 22:16:22Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:16:22Z [SBD] [i] Pester 5.7.1 already installed.
+# 2025-05-14 22:16:23Z [SBD] [+] Pester tests completed successfully
+# 2025-05-14 22:16:23Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:16:23Z [SBD] [+] Docker is installed and running. Version: 28.1.1
+# 2025-05-14 22:16:23Z [SBD] [+] Created Docker environment directory: resources/docker
+# 2025-05-14 22:16:23Z [SBD] [+] Created Dockerfile at: resources\docker\Dockerfile
+# 2025-05-14 22:16:24Z [SBD] [+] Successfully built Docker image: securebydefault/base
+# 2025-05-14 22:16:25Z [SBD] [+] Tests completed successfully
+# 2025-05-14 22:16:25Z [SBD] [+] Project structure initialized. Ready for module development

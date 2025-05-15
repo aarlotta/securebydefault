@@ -1,5 +1,5 @@
-# Use PowerShell 7 base image
-FROM mcr.microsoft.com/powershell:7.4-ubuntu-22.04
+# Use minimal Alpine base image
+FROM alpine:latest
 
 # Set working directory
 WORKDIR /app
@@ -7,12 +7,8 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Install dependencies
-RUN pwsh -Command "Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser"
-
 # Set environment variables
 ENV CI=true
-ENV POWERSHELL_TELEMETRY_OPTOUT=1
 
-# Run tests
-CMD ["pwsh", "-Command", "Invoke-Pester -Path ./tests -Output Detailed"] 
+# No need for an entrypoint or command since we're not running PowerShell tests
+# The container can be used for other purposes or extended as needed 
