@@ -36,3 +36,4 @@ if ($null -eq $current -or $current.Version -lt $MinimumVersion -or $Force) {
     Write-SbdLog -Message "Pester $($current.Version) already installed." -Level Info
 }
 
+

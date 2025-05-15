@@ -17,7 +17,15 @@ function Get-PwshVersion {
     }
 }
 
-$pesterVersion = Get-PwshVersion
+$pesterVersion = $null
+$pwsh = Get-Command pwsh -ErrorAction SilentlyContinue
+if ($pwsh) {
+    try {
+        $pesterVersion = & $pwsh.Source -NoProfile -Command '$PSVersionTable.PSVersion.ToString()'
+    } catch {
+        $pesterVersion = $null
+    }
+}
 
 if ($Force -or -not $pesterVersion -or [version]$pesterVersion -lt [version]'7.0.0') {
     Write-Host "[SBD] 🔍 Installing PowerShell 7.x using winget..." -ForegroundColor Yellow
@@ -32,4 +40,5 @@ if ($Force -or -not $pesterVersion -or [version]$pesterVersion -lt [version]'7.0
 } else {
     Write-Host "[SBD] ✅ PowerShell 7 already installed: v$pesterVersion" -ForegroundColor Green
 }
+
 
