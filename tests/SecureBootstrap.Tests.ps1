@@ -7,6 +7,20 @@
 # - Trust store management tests
 # - Execution policy tests
 
+$here       = Split-Path -Parent $MyInvocation.MyCommand.Path
+$projectDir = Resolve-Path "$here\.." | Select-Object -ExpandProperty Path
+$modulePath = Join-Path $projectDir 'modules\SecureBootstrap\SecureBootstrap.psd1'
+
+if (-not (Test-Path $modulePath)) {
+    throw "❌ Could not resolve SecureBootstrap module path. Expected at: $modulePath"
+}
+
+try {
+    Import-Module $modulePath -Force -ErrorAction Stop
+} catch {
+    throw "❌ Failed to import SecureBootstrap module: $($_.Exception.Message)"
+}
+
 BeforeAll {
     $requiredVersion = [Version]'5.5.0'
     $pesterVersion = (Get-Module -ListAvailable -Name Pester | Sort-Object Version -Descending | Select-Object -First 1).Version
@@ -14,15 +28,6 @@ BeforeAll {
         throw "❌ Pester version $($requiredVersion) or higher is required. Current: $($pesterVersion)"
     }
 }
-
-$here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$modulePath = Resolve-Path "$here\..\modules\SecureBootstrap\SecureBootstrap.psd1" -ErrorAction SilentlyContinue
-
-if (-not $modulePath -or -not (Test-Path $modulePath)) {
-    throw "❌ Could not resolve SecureBootstrap module path at expected location: $modulePath"
-}
-
-Import-Module $modulePath -Force -ErrorAction Stop
 
 Describe "SecureBootstrap Module" {
     Context "Module Loading" {
@@ -51,6 +56,7 @@ Describe "SecureBootstrap Module" {
 if ($env:GITHUB_ACTIONS -eq "true" -or $env:CI -eq "true" -or $Host.UI.RawUI.WindowTitle -like "*CI*") {
     # do nothing, skip Read-Host
 }
+
 
 
 
